@@ -10,10 +10,11 @@ import { MdDashboard, MdLogout } from "react-icons/md";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const user = {
-    name: "tonmoy",
-    profilePicture: "https://feref.jpg",
-  };
+  //   const user = {
+  //     name: "tonmoy",
+  //     profilePicture: "https://feref.jpg",
+  //   };
+  const user = false;
 
   return (
     <nav className="bg-white">
@@ -53,7 +54,7 @@ const Navbar = () => {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               />
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-white shadow-lg border rounded-lg py-2 w-48">
+                <div className="absolute z-50 right-0 mt-2 bg-white shadow-lg border rounded-lg py-2 w-48">
                   <div className="flex items-center px-4 py-2 text-sm text-gray-800 border-b">
                     <FaUserCircle className="mr-2 text-teal-600" />
                     {user.name}
@@ -72,7 +73,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link
-              to="/join-us"
+              to="/login"
               className="flex items-center bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition"
             >
               <FaSignInAlt className="mr-2" /> Join Us
