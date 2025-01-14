@@ -5,6 +5,8 @@ import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
 import CampDetailPage from "../Pages/CampDetailPage";
 import AddCampPage from "../Pages/AddCampPage";
+import DashboardLayout from "../LayOut/DashboardLayout";
+import AdminProfile from "../Pages/AdminPages/AdminProfile";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +32,16 @@ export const router = createBrowserRouter([
       {
         path: "/add-camp",
         element: <AddCampPage></AddCampPage>,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        index: true,
+        element: <AdminProfile></AdminProfile>,
       },
     ],
   },
