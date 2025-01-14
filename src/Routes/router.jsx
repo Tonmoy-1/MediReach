@@ -8,6 +8,7 @@ import AddCampPage from "../Pages/AddCampPage";
 import DashboardLayout from "../LayOut/DashboardLayout";
 import AdminProfile from "../Pages/AdminPages/AdminProfile";
 import UserProfile from "../Pages/UserPages/UserProfile";
+import AvailableCampsPage from "../Pages/AvailableCampsPage";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/available-camps",
+        element: <AvailableCampsPage></AvailableCampsPage>,
       },
       {
         path: "/camp-details/1",

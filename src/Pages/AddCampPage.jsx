@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import {
   FaMapMarkerAlt,
@@ -7,11 +8,12 @@ import {
   FaFileAlt,
   FaUsers,
 } from "react-icons/fa";
+import { imageUpload } from "../Api/Utils";
+import toast from "react-hot-toast";
 
 const AddCampPage = () => {
   const [formData, setFormData] = useState({
     name: "",
-    image: "",
     fees: "",
     dateTime: "",
     location: "",
@@ -20,7 +22,7 @@ const AddCampPage = () => {
     participantCount: 0,
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -28,10 +30,23 @@ const AddCampPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Camp Data Submitted: ", formData);
+    const image = e.target.image.files[0];
+    const photoURl = await imageUpload(image);
+    const campData = { ...formData, photoURl };
+    // console.log("Camp Data : ", campData);
     // Here, you can implement the logic to send the form data to the server or API
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/add-camp-post`,
+        campData
+      );
+      toast.success("Camp Data Added Successfully");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -68,10 +83,10 @@ const AddCampPage = () => {
                   Camp Image URL
                 </label>
                 <input
-                  type="text"
+                  type="file"
+                  id="image"
                   name="image"
-                  value={formData.image}
-                  onChange={handleInputChange}
+                  accept="image/*"
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
                   placeholder="Enter Image URL"
                   required
