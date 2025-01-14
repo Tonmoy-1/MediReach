@@ -7,14 +7,15 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { MdDashboard, MdLogout } from "react-icons/md";
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   //   const user = {
   //     name: "tonmoy",
   //     profilePicture: "https://feref.jpg",
   //   };
-  const user = false;
 
   return (
     <nav className="bg-white">
@@ -48,16 +49,17 @@ const Navbar = () => {
           {user ? (
             <div className="relative">
               <img
-                src={user.profilePicture}
+                referrerPolicy="no-referrer"
+                src={user?.photoURL}
                 alt="Profile"
-                className="h-10 w-10 rounded-full cursor-pointer"
+                className="h-10 w-10 rounded-full cursor-pointer object-cover"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               />
               {dropdownOpen && (
                 <div className="absolute z-50 right-0 mt-2 bg-white shadow-lg border rounded-lg py-2 w-48">
                   <div className="flex items-center px-4 py-2 text-sm text-gray-800 border-b">
                     <FaUserCircle className="mr-2 text-teal-600" />
-                    {user.name}
+                    {user?.displayName}
                   </div>
                   <Link
                     to="/dashboard"
@@ -65,7 +67,10 @@ const Navbar = () => {
                   >
                     <MdDashboard className="mr-2" /> Dashboard
                   </Link>
-                  <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-teal-100">
+                  <button
+                    onClick={logOut}
+                    className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-teal-100"
+                  >
                     <MdLogout className="mr-2" /> Logout
                   </button>
                 </div>

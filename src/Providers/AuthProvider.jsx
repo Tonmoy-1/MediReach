@@ -10,7 +10,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { app } from "../firebase/firebase.config";
+import { app } from "../Pages/Authentication/Firebase/firebase";
 // import axios from "axios";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      console.log("CurrentUser-->", currentUser?.email);
+      console.log("CurrentUser-->", currentUser);
       setUser(currentUser);
 
       //   if (currentUser?.email) {
