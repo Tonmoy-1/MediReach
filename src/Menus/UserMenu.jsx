@@ -14,7 +14,7 @@ const UserMenu = () => {
       <MenuItem
         icon={FaUserCircle}
         label="Participant Profile"
-        address="/dashboard/participant-profile"
+        address="/dashboard/user-profile"
       />
       <MenuItem
         icon={MdListAlt}

@@ -7,6 +7,7 @@ import CampDetailPage from "../Pages/CampDetailPage";
 import AddCampPage from "../Pages/AddCampPage";
 import DashboardLayout from "../LayOut/DashboardLayout";
 import AdminProfile from "../Pages/AdminPages/AdminProfile";
+import UserProfile from "../Pages/UserPages/UserProfile";
 
 export const router = createBrowserRouter([
   {
@@ -29,19 +30,25 @@ export const router = createBrowserRouter([
         path: "/camp-details/1",
         element: <CampDetailPage></CampDetailPage>,
       },
-      {
-        path: "/add-camp",
-        element: <AddCampPage></AddCampPage>,
-      },
     ],
   },
   {
     path: "/dashboard",
     element: <DashboardLayout></DashboardLayout>,
     children: [
+      // admin pages
       {
-        index: true,
+        path: "/dashboard/admin-profile",
         element: <AdminProfile></AdminProfile>,
+      },
+      {
+        path: "/dashboard/add-camp",
+        element: <AddCampPage></AddCampPage>,
+      },
+      // userPages
+      {
+        path: "/dashboard/user-profile",
+        element: <UserProfile></UserProfile>,
       },
     ],
   },

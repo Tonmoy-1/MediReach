@@ -8,8 +8,8 @@ const AdminMenu = () => {
     <>
       <MenuItem
         icon={FaUserCog}
-        label="Organizer Profile"
-        address="/dashboard/organizer-profile"
+        label="Admin Profile"
+        address="/dashboard/admin-profile"
       />
       <MenuItem
         icon={MdAddCircleOutline}

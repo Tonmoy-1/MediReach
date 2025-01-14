@@ -1,7 +1,7 @@
 import { FaUserEdit } from "react-icons/fa";
 import { AiOutlineCamera } from "react-icons/ai";
 
-const AdminProfile = () => {
+const UserProfile = () => {
   const adminData = {
     name: "John Doe",
     email: "johndoe@example.com",
@@ -16,7 +16,7 @@ const AdminProfile = () => {
         <div className="flex items-center mb-6">
           <FaUserEdit className="text-teal-600 dark:text-teal-400 w-8 h-8 mr-4" />
           <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-            Admin Profile
+            User Profile
           </h1>
         </div>
 
@@ -84,4 +84,4 @@ const AdminProfile = () => {
   );
 };
 
-export default AdminProfile;
+export default UserProfile;
