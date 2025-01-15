@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ManageCampsPage = () => {
@@ -90,14 +91,11 @@ const ManageCampsPage = () => {
                     {camp.healthcareProfessional}
                   </td>
                   <td className="px-6 py-4 flex items-center space-x-4">
-                    <button
-                      className="text-blue-500 hover:text-blue-700 transition"
-                      //   onClick={() =>
-                      //     (window.location.href = `/edit-camp/${camp.id}`)
-                      //   }
-                    >
-                      <FaEdit className="text-lg" />
-                    </button>
+                    <Link to={`/dashboard/updatecamp/${camp?._id}`}>
+                      <button className="text-blue-500 hover:text-blue-700 transition">
+                        <FaEdit className="text-lg" />
+                      </button>
+                    </Link>
                     <button
                       className="text-red-500 hover:text-red-700 transition"
                       onClick={() => handleDelete(camp?._id)}

@@ -10,6 +10,7 @@ import AdminProfile from "../Pages/AdminPages/AdminProfile";
 import UserProfile from "../Pages/UserPages/UserProfile";
 import AvailableCampsPage from "../Pages/AvailableCampsPage";
 import ManageCampsPage from "../Pages/AdminPages/ManageCampsPage";
+import UpdateCampPage from "../Pages/AdminPages/UpdateCampPage";
 
 export const router = createBrowserRouter([
   {
@@ -51,14 +52,18 @@ export const router = createBrowserRouter([
         path: "/dashboard/add-camp",
         element: <AddCampPage></AddCampPage>,
       },
+      {
+        path: "/dashboard/manage-camps",
+        element: <ManageCampsPage></ManageCampsPage>,
+      },
+      {
+        path: "/dashboard/updatecamp/:id",
+        element: <UpdateCampPage></UpdateCampPage>,
+      },
       // userPages
       {
         path: "/dashboard/user-profile",
         element: <UserProfile></UserProfile>,
-      },
-      {
-        path: "/dashboard/manage-camps",
-        element: <ManageCampsPage></ManageCampsPage>,
       },
     ],
   },

@@ -24,7 +24,7 @@ const AdminMenu = () => {
       <MenuItem
         icon={FaCampground}
         label="Manage Registered Camps"
-        address="/dashboard/manage-registered-camps"
+        address="/dashboard/"
       />
     </>
   );

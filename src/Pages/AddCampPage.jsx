@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   FaMapMarkerAlt,
   FaCalendarAlt,
@@ -12,40 +12,44 @@ import { imageUpload } from "../Api/Utils";
 import toast from "react-hot-toast";
 
 const AddCampPage = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    fees: "",
-    dateTime: "",
-    location: "",
-    healthcareProfessional: "",
-    description: "",
-    participantCount: 0,
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm();
 
-  const handleInputChange = async (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const onSubmit = async (data) => {
+    const { image, ...rest } = data;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const image = e.target.image.files[0];
-    const photoURl = await imageUpload(image);
-    const campData = { ...formData, photoURl };
-    // console.log("Camp Data : ", campData);
-    // Here, you can implement the logic to send the form data to the server or API
+    if (!image[0]) {
+      toast.error("Please upload a camp image.");
+      return;
+    }
+
     try {
-      const { data } = await axios.post(
+      // Upload image and get URL
+      const photoURl = await imageUpload(image[0]);
+      const participantCount = 0;
+      const campData = { ...rest, photoURl, participantCount };
+
+      // Send camp data to the server
+      const { data: response } = await axios.post(
         `${import.meta.env.VITE_API_URL}/add-camp-post`,
         campData
       );
       toast.success("Camp Data Added Successfully");
-      console.log(data);
+      setValue("name", "");
+      setValue("fees", "");
+      setValue("dateTime", "");
+      setValue("location", "");
+      setValue("healthcareProfessional", "");
+      setValue("description", "");
+      setValue("", 0);
+      setValue("image", null);
+      console.log(response);
     } catch (error) {
-      console.log(error);
+      error && toast.error("Failed to add camp data.");
     }
   };
 
@@ -57,7 +61,7 @@ const AddCampPage = () => {
             Add A New Camp
           </h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Camp Name */}
               <div>
@@ -67,30 +71,30 @@ const AddCampPage = () => {
                 </label>
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
+                  {...register("name", { required: "Camp Name is required" })}
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
                   placeholder="Enter Camp Name"
-                  required
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name.message}</p>
+                )}
               </div>
 
               {/* Camp Image */}
               <div>
                 <label className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 flex items-center">
                   <FaFileAlt className="mr-2 text-teal-600 dark:text-teal-400" />
-                  Camp Image URL
+                  Camp Image
                 </label>
                 <input
                   type="file"
-                  id="image"
-                  name="image"
+                  {...register("image", { required: "Camp Image is required" })}
                   accept="image/*"
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
-                  placeholder="Enter Image URL"
-                  required
                 />
+                {errors.image && (
+                  <p className="text-red-500 text-sm">{errors.image.message}</p>
+                )}
               </div>
 
               {/* Camp Fees */}
@@ -101,13 +105,13 @@ const AddCampPage = () => {
                 </label>
                 <input
                   type="text"
-                  name="fees"
-                  value={formData.fees}
-                  onChange={handleInputChange}
+                  {...register("fees", { required: "Camp Fees is required" })}
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
                   placeholder="Enter Camp Fees"
-                  required
                 />
+                {errors.fees && (
+                  <p className="text-red-500 text-sm">{errors.fees.message}</p>
+                )}
               </div>
 
               {/* Date and Time */}
@@ -118,12 +122,16 @@ const AddCampPage = () => {
                 </label>
                 <input
                   type="datetime-local"
-                  name="dateTime"
-                  value={formData.dateTime}
-                  onChange={handleInputChange}
+                  {...register("dateTime", {
+                    required: "Date & Time is required",
+                  })}
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
-                  required
                 />
+                {errors.dateTime && (
+                  <p className="text-red-500 text-sm">
+                    {errors.dateTime.message}
+                  </p>
+                )}
               </div>
 
               {/* Location */}
@@ -134,13 +142,17 @@ const AddCampPage = () => {
                 </label>
                 <input
                   type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleInputChange}
+                  {...register("location", {
+                    required: "Location is required",
+                  })}
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
                   placeholder="Enter Camp Location"
-                  required
                 />
+                {errors.location && (
+                  <p className="text-red-500 text-sm">
+                    {errors.location.message}
+                  </p>
+                )}
               </div>
 
               {/* Healthcare Professional */}
@@ -151,13 +163,17 @@ const AddCampPage = () => {
                 </label>
                 <input
                   type="text"
-                  name="healthcareProfessional"
-                  value={formData.healthcareProfessional}
-                  onChange={handleInputChange}
+                  {...register("healthcareProfessional", {
+                    required: "Healthcare Professional Name is required",
+                  })}
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
                   placeholder="Enter Professional's Name"
-                  required
                 />
+                {errors.healthcareProfessional && (
+                  <p className="text-red-500 text-sm">
+                    {errors.healthcareProfessional.message}
+                  </p>
+                )}
               </div>
 
               {/* Description */}
@@ -167,27 +183,28 @@ const AddCampPage = () => {
                   Description
                 </label>
                 <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
+                  {...register("description", {
+                    required: "Description is required",
+                  })}
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
                   placeholder="Enter Camp Description"
                   rows="4"
-                  required
                 />
+                {errors.description && (
+                  <p className="text-red-500 text-sm">
+                    {errors.description.message}
+                  </p>
+                )}
               </div>
 
-              {/* Participant Count (Starts at 0) */}
+              {/* Participant Count */}
               <div>
                 <label className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 flex items-center">
                   <FaUsers className="mr-2 text-teal-600 dark:text-teal-400" />
                   Participant Count (Starts at 0)
                 </label>
                 <input
-                  type="number"
-                  name="participantCount"
-                  value={formData.participantCount}
-                  onChange={handleInputChange}
+                  value={0}
                   className="w-full p-3 border rounded-lg text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-400"
                   disabled
                 />
