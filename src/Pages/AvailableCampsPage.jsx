@@ -139,7 +139,7 @@ const AvailableCampsPage = () => {
                 {camp.description.slice(0, 100)}
               </p>
               <a
-                href={`/camp-details/${camp.id}`}
+                href={`/camp/${camp._id}`}
                 className="mt-auto text-center py-2 px-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition duration-300"
               >
                 Details

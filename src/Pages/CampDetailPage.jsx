@@ -6,46 +6,25 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
-// Fake JSON data for camps (replace with actual data or API call)
-const campsData = [
-  {
-    id: 1,
-    name: "Heart Health Camp",
-    image: "https://i.ibb.co.com/2YYVqfM/img1.jpg",
-    fees: "$50",
-    dateTime: "2025-02-15 10:00 AM",
-    location: "City Hospital, Downtown",
-    healthcareProfessional: "Dr. John Doe",
-    participantCount: 150,
-    description:
-      "This camp focuses on heart health awareness, screenings, and providing heart health consultation by experienced doctors.",
-  },
-  {
-    id: 2,
-    name: "Dental Care Camp",
-    image: "https://via.placeholder.com/800x400",
-    fees: "$30",
-    dateTime: "2025-03-01 09:00 AM",
-    location: "Main Street Clinic",
-    healthcareProfessional: "Dr. Jane Smith",
-    participantCount: 120,
-    description:
-      "A free dental care camp with routine checkups, cleaning, and other dental services.",
-  },
-  // Add more camps data...
-];
+import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const CampDetailPage = () => {
-  const camp = campsData.find((camp) => camp.id === parseInt(1)); // Find the camp by ID
+  const [participants, setParticipants] = useState(0);
 
-  const [participants, setParticipants] = useState(camp.participantCount);
-
-  const handleJoinCamp = () => {
-    // Increment participant count when a user joins the camp
-    setParticipants(participants + 1);
-  };
+  const { id } = useParams();
+  const { data: camp, isLoading } = useQuery({
+    queryKey: ["camp", id],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/camp/${id}`
+      );
+      return data;
+    },
+  });
+  console.log(id, camp);
+  if (isLoading) return <p>Loading.........</p>;
 
   if (!camp) {
     return <div className="text-center text-red-600">Camp not found</div>; // Show error if camp is not found
@@ -58,7 +37,7 @@ const CampDetailPage = () => {
           {/* Left Column: Camp Image */}
           <div className="w-full">
             <img
-              src={camp.image}
+              src={camp.photoURl}
               alt={camp.name}
               className="w-full h-full object-cover rounded-lg"
             />
@@ -107,16 +86,13 @@ const CampDetailPage = () => {
 
             {/* Join Camp Button */}
             <div className="flex gap-3 items-center">
-              <button
-                onClick={handleJoinCamp}
-                className="py-3 px-4 bg-teal-600 text-white rounded-lg hover:bg-teal-500 dark:hover:bg-teal-400 transition duration-300"
-              >
+              <button className="py-3 px-4 bg-teal-600 text-white rounded-lg hover:bg-teal-500 dark:hover:bg-teal-400 transition duration-300">
                 Join Camp
               </button>
               {/* Back Button */}
               <button>
                 <Link
-                  to="/all-camps"
+                  to="/available-camps"
                   className="py-3 px-4 bg-teal-600 text-white rounded-lg hover:bg-teal-500 dark:hover:bg-teal-400 transition duration-300"
                 >
                   Back to All Camps
