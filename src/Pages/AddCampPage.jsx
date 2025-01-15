@@ -45,7 +45,6 @@ const AddCampPage = () => {
       setValue("location", "");
       setValue("healthcareProfessional", "");
       setValue("description", "");
-      setValue("", 0);
       setValue("image", null);
       console.log(response);
     } catch (error) {
