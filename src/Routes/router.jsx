@@ -9,6 +9,7 @@ import DashboardLayout from "../LayOut/DashboardLayout";
 import AdminProfile from "../Pages/AdminPages/AdminProfile";
 import UserProfile from "../Pages/UserPages/UserProfile";
 import AvailableCampsPage from "../Pages/AvailableCampsPage";
+import ManageCampsPage from "../Pages/AdminPages/ManageCampsPage";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/user-profile",
         element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "/dashboard/manage-camps",
+        element: <ManageCampsPage></ManageCampsPage>,
       },
     ],
   },
