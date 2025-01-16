@@ -73,7 +73,7 @@ const PopularCampsSection = () => {
                 {/* Participant Count */}
                 <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
                   <FaUsers className="mr-2 text-teal-600 dark:text-teal-400" />
-                  <span>{camp.participantCount} participants</span>
+                  <span>{camp?.participantCount} participants</span>
                 </div>
 
                 <Link

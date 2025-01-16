@@ -9,12 +9,17 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import ParticipantRegistrationModal from "./ParticipantRegistrationModal";
 
 const CampDetailPage = () => {
-  const [participants, setParticipants] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const { id } = useParams();
-  const { data: camp, isLoading } = useQuery({
+  const {
+    data: camp,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["camp", id],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -23,7 +28,7 @@ const CampDetailPage = () => {
       return data;
     },
   });
-  console.log(id, camp);
+  refetch();
   if (isLoading) return <p>Loading.........</p>;
 
   if (!camp) {
@@ -63,7 +68,9 @@ const CampDetailPage = () => {
             {/* Date & Time */}
             <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
               <FaCalendarAlt className="mr-2 text-teal-600 dark:text-teal-400" />
-              <span>{camp.dateTime}</span>
+              <span>{`${camp.dateTime.split("T")[0]} at ${
+                camp.dateTime.split("T")[1]
+              } PM`}</span>
             </div>
 
             {/* Location */}
@@ -81,12 +88,15 @@ const CampDetailPage = () => {
             {/* Participant Count */}
             <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
               <FaUsers className="mr-2 text-teal-600 dark:text-teal-400" />
-              <span>{participants} participants</span>
+              <span>{camp.participantCount} participants</span>
             </div>
 
             {/* Join Camp Button */}
             <div className="flex gap-3 items-center">
-              <button className="py-3 px-4 bg-teal-600 text-white rounded-lg hover:bg-teal-500 dark:hover:bg-teal-400 transition duration-300">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="py-3 px-4 bg-teal-600 text-white rounded-lg hover:bg-teal-500 dark:hover:bg-teal-400 transition duration-300"
+              >
                 Join Camp
               </button>
               {/* Back Button */}
@@ -98,6 +108,11 @@ const CampDetailPage = () => {
                   Back to All Camps
                 </Link>
               </button>
+              <ParticipantRegistrationModal
+                campDetails={camp}
+                isOpen={isModalOpen}
+                onClose={() => setModalOpen(false)}
+              />
             </div>
           </div>
         </div>
