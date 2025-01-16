@@ -47,7 +47,7 @@ const ManageCampsPage = () => {
 
   return (
     <section className="py-10 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
-      <div className="container mx-auto px-4">
+      <div className=" mx-auto">
         <header className="text-center mb-8">
           <h1 className="text-4xl font-bold text-teal-600 dark:text-teal-400">
             Manage Camps

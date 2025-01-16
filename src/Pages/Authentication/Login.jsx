@@ -3,6 +3,7 @@ import useAuth from "../../Hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { saveUserInformation } from "../../Api/Utils";
 
 const Login = () => {
   const { signIn, signInWithGoogle, setLoading, user } = useAuth();
@@ -34,8 +35,9 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       const data = await signInWithGoogle();
+      // Save user information in db if the user is new
+      await saveUserInformation(data?.user);
       navigate(from, { replace: true });
-      console.log(data);
     } catch (err) {
       console.log(err);
     }

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
-import { imageUpload } from "../../Api/Utils";
+import { imageUpload, saveUserInformation } from "../../Api/Utils";
 import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
@@ -22,10 +22,17 @@ const Register = () => {
       const photoURL = await imageUpload(image[0]);
 
       // Register user
-      await createUser(email, password);
+      const result = await createUser(email, password);
 
       // Update user profile
       await updateUserProfile(name, photoURL);
+
+      // Save user information in db if the user is new
+      await saveUserInformation({
+        ...result?.user,
+        displayName: name,
+        photoURL,
+      });
 
       // Navigate to home page
       navigate("/");
@@ -42,7 +49,9 @@ const Register = () => {
   // Handle Google Signin
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
+      const data = await signInWithGoogle();
+      // Save user information in db if the user is new
+      await saveUserInformation(data?.user);
       navigate("/");
       console.log("Signup Successful");
     } catch (err) {
