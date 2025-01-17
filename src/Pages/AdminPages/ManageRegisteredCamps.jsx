@@ -1,8 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const ManageRegisteredCamps = () => {
-  const { data: registerData, isLoading } = useQuery({
+  const {
+    data: registerData,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["allcamps"],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -14,21 +20,29 @@ const ManageRegisteredCamps = () => {
   console.log(registerData);
   if (isLoading) return <p>Loading.........</p>;
 
-  //   const handleCancel = async (campId) => {
-  //     try {
-  //       // Cancel registration for the specific camp
-  //       await axios.delete(
-  //         `${import.meta.env.VITE_API_URL}/registered-camps/${campId}`
-  //       );
-  //       setRegisteredCamps((prevCamps) =>
-  //         prevCamps.filter((camp) => camp._id !== campId)
-  //       );
-  //       alert("Registration canceled successfully.");
-  //     } catch (error) {
-  //       console.error("Error canceling registration:", error);
-  //       alert("Failed to cancel registration.");
-  //     }
-  //   };
+  const handleCancel = async (campId) => {
+    try {
+      // Cancel registration for the specific camp
+      const confirmation = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (confirmation.isConfirmed) {
+        await axios.delete(
+          `${import.meta.env.VITE_API_URL}/registered-camps/${campId}`
+        );
+        refetch();
+        toast.success("Registration canceled successfully.");
+      }
+    } catch (error) {
+      error && toast.error("Failed to cancel registration.");
+    }
+  };
 
   return (
     <div className="min-h-screen py-10  dark:bg-gray-900">
@@ -90,7 +104,7 @@ const ManageRegisteredCamps = () => {
                     </td>
                     <td className="px-4 py-2 text-center">
                       <button
-                        // onClick={() => handleCancel(camp._id)}
+                        onClick={() => handleCancel(camp._id)}
                         className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-500 rounded-lg"
                       >
                         Cancel

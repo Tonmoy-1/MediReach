@@ -46,11 +46,7 @@ const Sidebar = () => {
         <div>
           <div className="w-full hidden md:flex px-4 py-4 justify-center items-center bg-teal-100 dark:bg-teal-800 rounded-lg mx-auto">
             <Link to="/">
-              <img
-                src="https://i.ibb.co/4ZXzmq5/logo.png"
-                alt="logo"
-                className="w-24 h-auto"
-              />
+              <img src="MaDical" alt="logo" className="w-24 h-auto" />
             </Link>
           </div>
 

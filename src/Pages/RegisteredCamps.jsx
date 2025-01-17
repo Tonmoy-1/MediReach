@@ -1,13 +1,17 @@
-/* eslint-disable react/prop-types */
-
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const RegisteredCamps = () => {
   const { user } = useContext(AuthContext);
-  const { data: registeredCamps, isLoading } = useQuery({
+  const {
+    data: registeredCamps,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["registeredCamps"],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -17,6 +21,30 @@ const RegisteredCamps = () => {
     },
   });
   console.log(registeredCamps);
+
+  const handleCancel = async (campId) => {
+    try {
+      // Cancel registration for the specific camp
+      const confirmation = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (confirmation.isConfirmed) {
+        await axios.delete(
+          `${import.meta.env.VITE_API_URL}/registered-camps/${campId}`
+        );
+        refetch();
+        toast.success("Registration canceled successfully.");
+      }
+    } catch (error) {
+      error && toast.error("Failed to cancel registration.");
+    }
+  };
   if (isLoading) return <p>Loading.........</p>;
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 px-5">
@@ -92,7 +120,7 @@ const RegisteredCamps = () => {
                   </td>
                   <td className="px-6 py-3 text-sm ">
                     <button
-                      //   onClick={() => handleCancel(camp.id)}
+                      onClick={() => handleCancel(camp._id)}
                       className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-medium hover:bg-red-400"
                     >
                       Cancel
