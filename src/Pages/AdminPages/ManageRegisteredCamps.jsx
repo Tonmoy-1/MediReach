@@ -44,6 +44,16 @@ const ManageRegisteredCamps = () => {
     }
   };
 
+  const handlePending = async (id) => {
+    try {
+      await axios.patch(`${import.meta.env.VITE_API_URL}/pending-status/${id}`);
+      toast.success("You Successfully Update Confirm");
+      refetch();
+    } catch (error) {
+      error && toast.error("Something Went Wrong");
+    }
+  };
+
   return (
     <div className="min-h-screen py-10  dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4">
@@ -100,12 +110,19 @@ const ManageRegisteredCamps = () => {
                       {camp.paymentStatus === "pay" ? "Unpaid" : "Paid"}
                     </td>
                     <td className="px-4 py-2 text-gray-800 dark:text-gray-200">
-                      {camp.confirmationStatus}
+                      <button
+                        disabled={camp.confirmationStatus === "Confirm"}
+                        onClick={() => handlePending(camp?._id)}
+                        className="px-2 py-2 text-sm bg-teal-600 rounded-lg text-white dark:text-white disabled:cursor-not-allowed disabled:bg-gray-400"
+                      >
+                        {camp.confirmationStatus}
+                      </button>
                     </td>
                     <td className="px-4 py-2 text-center">
                       <button
+                        disabled={camp.paymentStatus === "Paid"}
                         onClick={() => handleCancel(camp._id)}
-                        className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-500 rounded-lg"
+                        className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-500 rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
                       >
                         Cancel
                       </button>
