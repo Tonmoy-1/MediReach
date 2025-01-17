@@ -1,14 +1,21 @@
 import { FaUserEdit } from "react-icons/fa";
-import { AiOutlineCamera } from "react-icons/ai";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
+import EditProfileModal from "../EditProfileModal";
+import Swal from "sweetalert2";
 
 const UserProfile = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { user } = useContext(AuthContext);
 
-  const { data: userData, isLoading } = useQuery({
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -20,6 +27,22 @@ const UserProfile = () => {
 
   if (isLoading) return <div>Loading...</div>;
   // if (error) return <div>Error loading user data</div>;
+
+  const handleUpdate = async (updatedData) => {
+    // Handle the updated data (e.g., send it to the server)
+    console.log(updatedData);
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/update-profile/${user?.email}`,
+        updatedData
+      );
+      refetch();
+      // On success, show a message and redirect if needed
+      Swal.fire("Success", "Profile updated successfully!", "success");
+    } catch (error) {
+      error && console.log("he");
+    }
+  };
 
   return (
     <div className="dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center py-6 px-4">
@@ -34,25 +57,11 @@ const UserProfile = () => {
 
         {/* Profile Image Section */}
         <div className="flex justify-center mb-6">
-          <div className="relative">
-            <img
-              src={userData.image}
-              alt="Admin Profile"
-              className="w-32 h-32 rounded-full border-4 border-teal-600"
-            />
-            <label
-              htmlFor="image-upload"
-              className="absolute bottom-0 right-0 bg-teal-600 text-white rounded-full p-2 cursor-pointer"
-            >
-              <AiOutlineCamera className="w-5 h-5" />
-            </label>
-            <input
-              id="image-upload"
-              type="file"
-              accept="image/*"
-              className="hidden"
-            />
-          </div>
+          <img
+            src={userData.image}
+            alt="Admin Profile"
+            className="w-32 h-32 rounded-full object-cover border-4 border-teal-600"
+          />
         </div>
 
         {/* Profile Form */}
@@ -87,10 +96,19 @@ const UserProfile = () => {
 
         {/* Edit Profile Button */}
         <div className="flex justify-center mt-6">
-          <button className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+          >
             Edit Profile
           </button>
         </div>
+        <EditProfileModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          adminData={userData}
+          onUpdate={handleUpdate}
+        />
       </div>
     </div>
   );
