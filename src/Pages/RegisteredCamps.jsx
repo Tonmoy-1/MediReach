@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const RegisteredCamps = () => {
   const { user } = useContext(AuthContext);
@@ -111,13 +112,15 @@ const RegisteredCamps = () => {
                     </span>
                   </td>
                   <td className="px-6 py-3 text-sm ">
-                    <button
-                      disabled={camp.paymentStatus === "pay"}
-                      //   onClick={() => handleFeedback(camp.id)}
-                      className="px-4 py-2 bg-teal-500 text-white rounded-lg text-xs font-medium hover:bg-teal-400 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                    >
-                      Feedback
-                    </button>
+                    <Link to={"/dashboard/send-feedback"}>
+                      <button
+                        disabled={camp.paymentStatus === "pay"}
+                        //   onClick={() => handleFeedback(camp.id)}
+                        className="px-4 py-2 bg-teal-500 text-white rounded-lg text-xs font-medium hover:bg-teal-400 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                      >
+                        Feedback
+                      </button>
+                    </Link>
                   </td>
                   <td className="px-6 py-3 text-sm ">
                     <button
