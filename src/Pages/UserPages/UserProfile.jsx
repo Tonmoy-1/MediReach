@@ -1,13 +1,25 @@
 import { FaUserEdit } from "react-icons/fa";
 import { AiOutlineCamera } from "react-icons/ai";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const UserProfile = () => {
-  const adminData = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-    role: "Admin",
-    image: "https://via.placeholder.com/150", // Placeholder image
-  };
+  const { user } = useContext(AuthContext);
+
+  const { data: userData, isLoading } = useQuery({
+    queryKey: ["userData"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/user-data/${user?.email}`
+      );
+      return data;
+    },
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error loading user data</div>;
 
   return (
     <div className="dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center py-6 px-4">
@@ -24,7 +36,7 @@ const UserProfile = () => {
         <div className="flex justify-center mb-6">
           <div className="relative">
             <img
-              src={adminData.image}
+              src={userData.image}
               alt="Admin Profile"
               className="w-32 h-32 rounded-full border-4 border-teal-600"
             />
@@ -50,7 +62,7 @@ const UserProfile = () => {
               Name
             </label>
             <p className="mt-1 text-gray-600 dark:text-gray-300">
-              {adminData.name}
+              {userData.name}
             </p>
           </div>
 
@@ -59,7 +71,7 @@ const UserProfile = () => {
               Email
             </label>
             <p className="mt-1 text-gray-600 dark:text-gray-300">
-              {adminData.email}
+              {userData.email}
             </p>
           </div>
 
@@ -68,7 +80,7 @@ const UserProfile = () => {
               Role
             </label>
             <p className="mt-1 text-gray-600 dark:text-gray-300">
-              {adminData.role}
+              {userData.role}
             </p>
           </div>
         </div>
