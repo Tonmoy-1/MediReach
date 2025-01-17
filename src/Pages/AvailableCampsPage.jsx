@@ -117,10 +117,15 @@ const AvailableCampsPage = () => {
                 {camp.name}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                <strong>Date & Time:</strong>
-                <span>{` ${camp.dateTime.split("T")[0]} at ${
-                  camp.dateTime.split("T")[1]
-                } PM`}</span>
+                <strong>Date & Time: </strong>
+                <span>
+                  {camp.dateTime
+                    ? new Date(camp.dateTime).toLocaleString("en-US", {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                      })
+                    : "Date and time not available"}
+                </span>
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
                 <strong>Location:</strong> {camp.location}

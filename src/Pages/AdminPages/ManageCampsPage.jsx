@@ -79,10 +79,15 @@ const ManageCampsPage = () => {
                   <td className="px-6 py-4 text-gray-800 dark:text-gray-300">
                     {camp.name}
                   </td>
-                  <td className="px-4 py-4 text-gray-800 dark:text-gray-300">
-                    {` ${camp.dateTime.split("T")[0]} at ${
-                      camp.dateTime.split("T")[1]
-                    } PM`}
+                  <td className="px-8 py-4 text-gray-800 dark:text-gray-300">
+                    <span>
+                      {camp.dateTime
+                        ? new Date(camp.dateTime).toLocaleString("en-US", {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })
+                        : "Date and time not available"}
+                    </span>
                   </td>
                   <td className="px-6 py-4 text-gray-800 dark:text-gray-300">
                     {camp.location}

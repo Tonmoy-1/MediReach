@@ -31,6 +31,8 @@ const ParticipantRegistrationModal = ({ campDetails, isOpen, onClose }) => {
       participantGender,
       participantPhone,
       participantName,
+      paymentStatus: "pay",
+      confirmationStatus: "pending",
     };
 
     try {

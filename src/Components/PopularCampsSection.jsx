@@ -53,9 +53,14 @@ const PopularCampsSection = () => {
                 {/* Date & Time */}
                 <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
                   <FaCalendarAlt className="mr-2 text-teal-600 dark:text-teal-400" />
-                  <span>{`${camp.dateTime.split("T")[0]} at ${
-                    camp.dateTime.split("T")[1]
-                  } PM`}</span>
+                  <span>
+                    {camp.dateTime
+                      ? new Date(camp.dateTime).toLocaleString("en-US", {
+                          dateStyle: "medium",
+                          timeStyle: "short",
+                        })
+                      : "Date and time not available"}
+                  </span>
                 </div>
 
                 {/* Location */}

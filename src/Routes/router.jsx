@@ -11,6 +11,7 @@ import UserProfile from "../Pages/UserPages/UserProfile";
 import AvailableCampsPage from "../Pages/AvailableCampsPage";
 import ManageCampsPage from "../Pages/AdminPages/ManageCampsPage";
 import UpdateCampPage from "../Pages/AdminPages/UpdateCampPage";
+import ManageRegisteredCamps from "../Pages/AdminPages/ManageRegisteredCamps";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/updatecamp/:id",
         element: <UpdateCampPage></UpdateCampPage>,
+      },
+      {
+        path: "/dashboard/manage-registered-camps",
+        element: <ManageRegisteredCamps></ManageRegisteredCamps>,
       },
       // userPages
       {
