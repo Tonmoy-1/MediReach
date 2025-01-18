@@ -15,6 +15,8 @@ import ManageRegisteredCamps from "../Pages/AdminPages/ManageRegisteredCamps";
 import RegisteredCamps from "../Pages/RegisteredCamps";
 import FeedbackSubmitPage from "../Pages/FeedbackSubmitPage";
 import PrivateRoute from "./PrivetRoute";
+import AdminRoute from "./AdminRoute";
+import UserRoute from "./UserRoute";
 
 export const router = createBrowserRouter([
   {
@@ -60,7 +62,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/admin-profile",
         element: (
           <PrivateRoute>
-            <AdminProfile></AdminProfile>
+            <AdminRoute>
+              <AdminProfile></AdminProfile>
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -68,7 +72,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/add-camp",
         element: (
           <PrivateRoute>
-            <AddCampPage></AddCampPage>
+            <AdminRoute>
+              <AddCampPage></AddCampPage>
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -76,7 +82,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/manage-camps",
         element: (
           <PrivateRoute>
-            <ManageCampsPage></ManageCampsPage>
+            <AdminRoute>
+              <ManageCampsPage></ManageCampsPage>
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -84,7 +92,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/updatecamp/:id",
         element: (
           <PrivateRoute>
-            <UpdateCampPage></UpdateCampPage>
+            <AdminRoute>
+              <UpdateCampPage></UpdateCampPage>
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -92,7 +102,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/manage-registered-camps",
         element: (
           <PrivateRoute>
-            <ManageRegisteredCamps></ManageRegisteredCamps>
+            <AdminRoute>
+              <ManageRegisteredCamps></ManageRegisteredCamps>
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -101,7 +113,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/user-profile",
         element: (
           <PrivateRoute>
-            <UserProfile></UserProfile>
+            <UserRoute>
+              <UserProfile></UserProfile>
+            </UserRoute>
           </PrivateRoute>
         ),
       },
@@ -109,7 +123,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/registered-camps",
         element: (
           <PrivateRoute>
-            <RegisteredCamps></RegisteredCamps>
+            <UserRoute>
+              <RegisteredCamps></RegisteredCamps>
+            </UserRoute>
           </PrivateRoute>
         ),
       },
@@ -117,7 +133,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/send-feedback",
         element: (
           <PrivateRoute>
-            <FeedbackSubmitPage></FeedbackSubmitPage>
+            <UserRoute>
+              <FeedbackSubmitPage></FeedbackSubmitPage>
+            </UserRoute>
           </PrivateRoute>
         ),
       },
