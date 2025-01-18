@@ -1,15 +1,15 @@
 import { FaUserEdit } from "react-icons/fa";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import EditProfileModal from "../EditProfileModal";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 
 const AdminProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth;
 
   const {
     data: adminData,

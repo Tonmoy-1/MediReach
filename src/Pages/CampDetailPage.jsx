@@ -8,11 +8,13 @@ import {
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+
 import ParticipantRegistrationModal from "./ParticipantRegistrationModal";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const CampDetailPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   const { id } = useParams();
   const {
@@ -22,9 +24,7 @@ const CampDetailPage = () => {
   } = useQuery({
     queryKey: ["camp", id],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/camp/${id}`
-      );
+      const { data } = await axiosSecure.get(`/camp/${id}`);
       return data;
     },
   });
