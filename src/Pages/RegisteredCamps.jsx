@@ -100,12 +100,12 @@ const RegisteredCamps = () => {
                       {camp.paymentStatus}
                     </button>
                   </td>
-                  <td className="px-6 py-3 text-sm">
+                  <td className="px-6 py-3 text-xs">
                     <span
-                      className={`px-3 py-1 rounded-lg text-xs font-semibold ${
+                      className={`px-4 py-2 rounded-lg text-sm font-semibold ${
                         camp.confirmationStatus === "Confirm"
                           ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
+                          : "bg-yellow-300 text-yellow-800"
                       }`}
                     >
                       {camp.confirmationStatus}

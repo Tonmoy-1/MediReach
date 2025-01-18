@@ -6,6 +6,8 @@ import AdminMenu from "./AdminMenu";
 import UserMenu from "./UserMenu";
 import useAuth from "../Hooks/useAuth";
 import useRole from "../Hooks/useRole";
+import MenuItem from "./MenuItem";
+import { FaHome } from "react-icons/fa";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -65,7 +67,9 @@ const Sidebar = () => {
 
         <div>
           <hr className="border-gray-300 dark:border-gray-700" />
-
+          <div>
+            <MenuItem icon={FaHome} label="Home" address="/" />
+          </div>
           <button
             onClick={logOut}
             className="flex w-full items-center px-4 py-3 mt-5 text-gray-600 dark:text-gray-300 hover:bg-teal-100 dark:hover:bg-teal-800 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300 transform rounded-lg"

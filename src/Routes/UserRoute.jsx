@@ -6,7 +6,7 @@ const UserRoute = ({ children }) => {
   const [role, isLoading] = useRole();
 
   if (isLoading) return <p>Laoding...</p>;
-  if (role === "seller") return children;
+  if (role === "user") return children;
   return <Navigate to="/dashboard" replace="true" />;
 };
 
