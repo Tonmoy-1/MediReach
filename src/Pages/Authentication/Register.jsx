@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import { imageUpload, saveUserInformation } from "../../Api/Utils";
 import { FcGoogle } from "react-icons/fc";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { createUser, updateUserProfile, signInWithGoogle } = useAuth();
@@ -53,10 +54,9 @@ const Register = () => {
       // Save user information in db if the user is new
       await saveUserInformation(data?.user);
       navigate("/");
-      console.log("Signup Successful");
+      toast.success("Signup Successful");
     } catch (err) {
-      console.error(err);
-      console.log("Signup Failed", err.message);
+      err && toast.error("Something Wrong Try Again ");
     }
   };
 

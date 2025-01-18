@@ -6,19 +6,18 @@ import toast from "react-hot-toast";
 import { saveUserInformation } from "../../Api/Utils";
 
 const Login = () => {
-  const { signIn, signInWithGoogle, setLoading, user } = useAuth();
+  const { signIn, signInWithGoogle, setLoading, user, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  if (loading) return <p>loding...</p>;
+  const from = location?.state?.from?.pathname || "/";
   if (user) return <Navigate to={from} replace={true} />;
-
   const onSubmit = async (data) => {
     const { email, password } = data;
     try {
@@ -38,8 +37,10 @@ const Login = () => {
       // Save user information in db if the user is new
       await saveUserInformation(data?.user);
       navigate(from, { replace: true });
+      toast.success("LogIn Successfull");
     } catch (err) {
-      console.log(err);
+      err && toast.error("Something Wrong");
+      setLoading(false);
     }
   };
 

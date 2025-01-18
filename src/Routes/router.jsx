@@ -14,6 +14,7 @@ import UpdateCampPage from "../Pages/AdminPages/UpdateCampPage";
 import ManageRegisteredCamps from "../Pages/AdminPages/ManageRegisteredCamps";
 import RegisteredCamps from "../Pages/RegisteredCamps";
 import FeedbackSubmitPage from "../Pages/FeedbackSubmitPage";
+import PrivateRoute from "./PrivetRoute";
 
 export const router = createBrowserRouter([
   {
@@ -38,13 +39,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "/camp/:id",
-        element: <CampDetailPage></CampDetailPage>,
+        element: (
+          <PrivateRoute>
+            <CampDetailPage></CampDetailPage>
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout></DashboardLayout>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       // admin pages
       {
