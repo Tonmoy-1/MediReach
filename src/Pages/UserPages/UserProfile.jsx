@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import EditProfileModal from "../EditProfileModal";
 import Swal from "sweetalert2";
+import Spinner from "../Spinner";
 
 const UserProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,7 @@ const UserProfile = () => {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner></Spinner>;
   // if (error) return <div>Error loading user data</div>;
 
   const handleUpdate = async (updatedData) => {

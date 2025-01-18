@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { FaSearch, FaThLarge, FaThList } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Spinner from "./Spinner";
 
 const AvailableCampsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +19,7 @@ const AvailableCampsPage = () => {
       return data;
     },
   });
-  if (isLoading) return <p>Loading.........</p>;
+  if (isLoading) return <Spinner></Spinner>;
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 

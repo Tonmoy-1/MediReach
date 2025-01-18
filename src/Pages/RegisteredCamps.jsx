@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { useState } from "react";
 import PaymentModal from "./PaymentModal";
+import Spinner from "./Spinner";
 
 const RegisteredCamps = () => {
   const { user } = useAuth();
@@ -48,7 +49,7 @@ const RegisteredCamps = () => {
       error && toast.error("Failed to cancel registration.");
     }
   };
-  if (isLoading) return <p>Loading.........</p>;
+  if (isLoading) return <Spinner></Spinner>;
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 px-5">
       <div className="max-w-7xl mx-auto">
@@ -107,7 +108,7 @@ const RegisteredCamps = () => {
                     <span
                       className={`px-4 py-2 rounded-lg text-sm font-semibold ${
                         camp.confirmationStatus === "Confirm"
-                          ? "bg-green-100 text-green-800"
+                          ? "bg-green-600 text-white"
                           : "bg-yellow-300 text-yellow-800"
                       }`}
                     >

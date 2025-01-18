@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import ParticipantRegistrationModal from "./ParticipantRegistrationModal";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import Spinner from "./Spinner";
 
 const CampDetailPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -29,7 +30,7 @@ const CampDetailPage = () => {
     },
   });
   refetch();
-  if (isLoading) return <p>Loading.........</p>;
+  if (isLoading) return <Spinner></Spinner>;
 
   if (!camp) {
     return <div className="text-center text-red-600">Camp not found</div>; // Show error if camp is not found

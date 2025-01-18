@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Spinner from "../Pages/Spinner";
 
 const PopularCampsSection = () => {
   const { data: campsData, isLoading } = useQuery({
@@ -20,7 +21,7 @@ const PopularCampsSection = () => {
     },
   });
 
-  if (isLoading) return <p>Loding.........</p>;
+  if (isLoading) return <Spinner></Spinner>;
   return (
     <section className="bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-300 py-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

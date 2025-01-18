@@ -5,6 +5,7 @@ import axios from "axios";
 import EditProfileModal from "../EditProfileModal";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
+import Spinner from "../Spinner";
 
 const AdminProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,7 @@ const AdminProfile = () => {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner></Spinner>;
   // if (error) return <div>Error loading user data</div>;
 
   const handleUpdate = async (updatedData) => {

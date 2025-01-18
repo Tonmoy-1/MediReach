@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Spinner from "../Spinner";
 
 const ManageRegisteredCamps = () => {
   const {
@@ -18,7 +19,7 @@ const ManageRegisteredCamps = () => {
     },
   });
   console.log(registerData);
-  if (isLoading) return <p>Loading.........</p>;
+  if (isLoading) return <Spinner></Spinner>;
 
   const handleCancel = async (campId) => {
     try {

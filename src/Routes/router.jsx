@@ -17,12 +17,17 @@ import FeedbackSubmitPage from "../Pages/FeedbackSubmitPage";
 import PrivateRoute from "./PrivetRoute";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
+import Spinner from "../Pages/Spinner";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayOut></MainLayOut>,
     children: [
+      {
+        path: "spiner",
+        element: <Spinner></Spinner>,
+      },
       {
         index: true,
         element: <Home></Home>,
