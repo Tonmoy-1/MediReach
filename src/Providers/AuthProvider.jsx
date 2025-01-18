@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "../Pages/Authentication/Firebase/firebase";
+import axios from "axios";
 // import axios from "axios";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -52,26 +53,24 @@ const AuthProvider = ({ children }) => {
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      console.log("CurrentUser-->", currentUser);
+      // console.log("CurrentUser-->", currentUser);
       setUser(currentUser);
 
-      //   if (currentUser?.email) {
-      //     setUser(currentUser);
+      if (currentUser) {
+        const userInfo = { email: currentUser.email };
+        axios
+          .post(`${import.meta.env.VITE_API_URL}/jwt`, userInfo)
+          .then((res) => {
+            if (res.data.token) {
+              localStorage.setItem("access-token", res.data.token);
+              setLoading(false);
+            }
+          });
+      } else {
+        localStorage.removeItem("access-token");
+        setLoading(false);
+      }
 
-      //     // Get JWT token
-      //     await axios.post(
-      //       `${import.meta.env.VITE_API_URL}/jwt`,
-      //       {
-      //         email: currentUser?.email,
-      //       },
-      //       { withCredentials: true }
-      //     );
-      //   } else {
-      //     setUser(currentUser);
-      //     await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-      //       withCredentials: true,
-      //     });
-      //   }
       setLoading(false);
     });
     return () => {
