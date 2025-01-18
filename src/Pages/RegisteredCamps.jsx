@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext } from "react";
-import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
+import { useState } from "react";
+import PaymentModal from "./PaymentModal";
 
 const RegisteredCamps = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const {
     data: registeredCamps,
     isLoading,
@@ -21,7 +24,6 @@ const RegisteredCamps = () => {
       return data;
     },
   });
-  console.log(registeredCamps);
 
   const handleCancel = async (campId) => {
     try {
@@ -91,6 +93,7 @@ const RegisteredCamps = () => {
                   </td>
                   <td className="px-6 py-3 text-sm">
                     <button
+                      onClick={() => setModalOpen(true)}
                       className={`px-4 py-2 rounded-lg text-xs font-semibold ${
                         camp.paymentStatus === "Paid"
                           ? "bg-gray-400 text-black cursor-not-allowed"
@@ -131,6 +134,12 @@ const RegisteredCamps = () => {
                       Cancel
                     </button>
                   </td>
+                  <PaymentModal
+                    isOpen={isModalOpen}
+                    camp={camp}
+                    fees={camp?.campDetails?.fees}
+                    onClose={() => setModalOpen(false)}
+                  ></PaymentModal>
                 </tr>
               ))}
             </tbody>

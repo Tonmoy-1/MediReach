@@ -14,10 +14,6 @@ const ParticipantRegistrationModal = ({ campDetails, isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    // const campName = campDetails?.name;
-    // const campFees = campDetails?.fees;
-    // const location = campDetails?.location;
-    // const healthcareProfessional = campDetails?.healthcareProfessional;
     const participantName = user?.displayName;
     const participantEmail = user?.email;
     const participantAge = form.age.value;
