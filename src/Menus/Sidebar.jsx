@@ -55,8 +55,10 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             <nav className="space-y-4">
-              <AdminMenu />
-              <UserMenu />
+              {/* <AdminMenu />
+              <UserMenu /> */}
+              {role === "admin" && <AdminMenu />}
+              {role === "user" && <UserMenu />}
             </nav>
           </div>
         </div>

@@ -58,36 +58,68 @@ export const router = createBrowserRouter([
       // admin pages
       {
         path: "/dashboard/admin-profile",
-        element: <AdminProfile></AdminProfile>,
+        element: (
+          <PrivateRoute>
+            <AdminProfile></AdminProfile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/add-camp",
-        element: <AddCampPage></AddCampPage>,
+        element: (
+          <PrivateRoute>
+            <AddCampPage></AddCampPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/manage-camps",
-        element: <ManageCampsPage></ManageCampsPage>,
+        element: (
+          <PrivateRoute>
+            <ManageCampsPage></ManageCampsPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/updatecamp/:id",
-        element: <UpdateCampPage></UpdateCampPage>,
+        element: (
+          <PrivateRoute>
+            <UpdateCampPage></UpdateCampPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/manage-registered-camps",
-        element: <ManageRegisteredCamps></ManageRegisteredCamps>,
+        element: (
+          <PrivateRoute>
+            <ManageRegisteredCamps></ManageRegisteredCamps>
+          </PrivateRoute>
+        ),
       },
       // userPages
       {
         path: "/dashboard/user-profile",
-        element: <UserProfile></UserProfile>,
+        element: (
+          <PrivateRoute>
+            <UserProfile></UserProfile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/registered-camps",
-        element: <RegisteredCamps></RegisteredCamps>,
+        element: (
+          <PrivateRoute>
+            <RegisteredCamps></RegisteredCamps>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/send-feedback",
-        element: <FeedbackSubmitPage></FeedbackSubmitPage>,
+        element: (
+          <PrivateRoute>
+            <FeedbackSubmitPage></FeedbackSubmitPage>
+          </PrivateRoute>
+        ),
       },
     ],
   },

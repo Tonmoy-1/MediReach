@@ -9,7 +9,7 @@ import useAuth from "../../Hooks/useAuth";
 const AdminProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user } = useAuth;
+  const { user } = useAuth();
 
   const {
     data: adminData,
@@ -58,7 +58,7 @@ const AdminProfile = () => {
         {/* Profile Image Section */}
         <div className="flex justify-center mb-6">
           <img
-            src={adminData.image}
+            src={adminData?.image}
             alt="Admin Profile"
             className="w-32 h-32 rounded-full object-cover border-4 border-teal-600"
           />
