@@ -137,6 +137,8 @@ const RegisteredCamps = () => {
                   <PaymentModal
                     isOpen={isModalOpen}
                     camp={camp}
+                    refetch={refetch}
+                    setModalOpen={setModalOpen}
                     fees={camp?.campDetails?.fees}
                     onClose={() => setModalOpen(false)}
                   ></PaymentModal>

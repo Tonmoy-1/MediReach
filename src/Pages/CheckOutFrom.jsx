@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 
-const CheckoutForm = ({ camp }) => {
+const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
@@ -77,18 +77,26 @@ const CheckoutForm = ({ camp }) => {
     // set database payment info
     if (paymentIntent.status === "succeeded") {
       try {
-        // await axiosSecure.post("/payment-success", {
-        //   ...camp,
-        //   transactionId: paymentIntent?.id,
-        // });
+        // after successfully pement change payment and confirmation status
+        await axiosSecure.patch(
+          `${import.meta.env.VITE_API_URL}/pending-status/${camp._id}`
+        );
 
-        toast.success("Order placed successfully");
-        // refetch();
+        // set payment data in server side database
+        await axiosSecure.post("/payment-success", {
+          campName: camp?.campDetails.name,
+          campFees: camp?.campDetails.fees,
+          paymentStatus: camp?.paymentStatus,
+          confirmationStatus: camp?.confirmationStatus,
+          transactionId: paymentIntent?.id,
+        });
+        toast.success("Payment successfully");
+        refetch();
       } catch (error) {
         console.error(error);
       } finally {
         // setProcessing(false);
-        // closeModal();
+        setModalOpen(false);
       }
     }
   };

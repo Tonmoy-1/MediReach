@@ -5,7 +5,14 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckOutFrom";
 const stripePromise = loadStripe(import.meta.env.VITE_STRPE_PUBLIC_KEY);
-const PaymentModal = ({ isOpen, onClose, fees, camp }) => {
+const PaymentModal = ({
+  isOpen,
+  onClose,
+  fees,
+  camp,
+  refetch,
+  setModalOpen,
+}) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -38,7 +45,11 @@ const PaymentModal = ({ isOpen, onClose, fees, camp }) => {
         <div className="p-6 max-h-[75vh] overflow-y-auto">
           <Elements stripe={stripePromise}>
             {/* from components */}
-            <CheckoutForm camp={camp}></CheckoutForm>
+            <CheckoutForm
+              camp={camp}
+              refetch={refetch}
+              setModalOpen={setModalOpen}
+            ></CheckoutForm>
           </Elements>
         </div>
       </div>
