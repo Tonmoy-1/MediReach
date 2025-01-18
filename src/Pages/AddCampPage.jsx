@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import {
   FaMapMarkerAlt,
@@ -10,8 +9,11 @@ import {
 } from "react-icons/fa";
 import { imageUpload } from "../Api/Utils";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddCampPage = () => {
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -34,11 +36,7 @@ const AddCampPage = () => {
       const campData = { ...rest, photoURl, participantCount };
 
       // Send camp data to the server
-      const { data: response } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/add-camp-post`,
-        campData
-      );
-      toast.success("Camp Data Added Successfully");
+      await axiosSecure.post(`/add-camp-post`, campData);
       setValue("name", "");
       setValue("fees", "");
       setValue("dateTime", "");
@@ -46,7 +44,7 @@ const AddCampPage = () => {
       setValue("healthcareProfessional", "");
       setValue("description", "");
       setValue("image", null);
-      console.log(response);
+      Swal.fire("Success", "Camp Data Added Successfully!", "success");
     } catch (error) {
       error && toast.error("Failed to add camp data.");
     }

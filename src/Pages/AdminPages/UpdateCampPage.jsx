@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import Swal from "sweetalert2";
 import {
   FaFileAlt,
@@ -9,16 +9,19 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { imageUpload } from "../../Api/Utils";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Spinner from "../Spinner";
 
 const UpdateCampPage = () => {
+  const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const [campData, setCampData] = useState();
   const [loading, setLoading] = useState(false);
   const [updateData, setUpdateData] = useState();
+  const navigate = useNavigate();
 
   // Fetch current camp details
   useEffect(() => {
@@ -28,13 +31,11 @@ const UpdateCampPage = () => {
   const fetchCampDetails = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/camp/${id}`
-      );
+      const { data } = await axiosSecure.get(`/camp/${id}`);
       setCampData(data);
       setLoading(false);
     } catch (error) {
-      console.error("Failed to fetch camp details:", error);
+      error && toast.error("something wrong");
       setLoading(false);
     }
   };
@@ -68,23 +69,20 @@ const UpdateCampPage = () => {
       photoURl: photoURl,
     }));
 
-    console.table(updatedData);
     try {
       // Add logic to update camp data, e.g., send it to the API
 
-      await axios.put(
-        `${import.meta.env.VITE_API_URL}/update-camp/${campData?._id}`,
-        updatedData
-      );
+      await axiosSecure.put(`/update-camp/${campData?._id}`, updatedData);
 
       // On success, show a message and redirect if needed
       Swal.fire("Success", "Camp details updated successfully!", "success");
+      navigate("/dashboard/manage-camps");
     } catch (error) {
       error && Swal.fire("Error", "Failed to update camp details", "error");
     }
   };
 
-  if (loading) return <p>Loading camp details...</p>;
+  if (loading) return <Spinner></Spinner>;
 
   return (
     <div className="container mx-auto py-10 px-4">

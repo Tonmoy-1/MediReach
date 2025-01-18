@@ -5,6 +5,7 @@ import {
   FaCampground,
   FaSignInAlt,
   FaUserCircle,
+  FaStethoscope,
 } from "react-icons/fa";
 import { MdDashboard, MdLogout } from "react-icons/md";
 import useAuth from "../Hooks/useAuth";
@@ -12,22 +13,16 @@ import useAuth from "../Hooks/useAuth";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  //   const user = {
-  //     name: "tonmoy",
-  //     profilePicture: "https://feref.jpg",
-  //   };
 
   return (
-    <nav className="bg-white">
+    <nav className="bg-white md:mx-4">
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* Logo and Website Name */}
         <div className="flex items-center">
-          <img
-            src="/logo.png" // Replace with your logo path
-            alt="Logo"
-            className="h-10 w-10 mr-2"
-          />
-          <h1 className="text-2xl font-bold text-teal-600">MCMS</h1>
+          <FaStethoscope className="text-teal-600 text-4xl" />
+          <h1 className=" hidden md:block text-2xl font-bold text-teal-600">
+            MediReach
+          </h1>
         </div>
 
         {/* Navigation Links */}

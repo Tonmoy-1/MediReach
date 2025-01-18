@@ -39,11 +39,10 @@ const Register = () => {
       navigate("/");
 
       // Show success message (toast integration placeholder)
-      console.log("Signup Successful");
+      toast.success("Signup Successful");
     } catch (err) {
-      console.error(err);
       // Show error message (toast integration placeholder)
-      console.log("Signup Failed", err.message);
+      toast.error("Signup Failed", err.message);
     }
   };
 

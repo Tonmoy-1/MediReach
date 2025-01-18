@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Spinner from "../Spinner";
 
 const ManageCampsPage = () => {
+  const axiosSecure = useAxiosSecure();
   // Fetch camps
   const {
     data: camps,
@@ -14,9 +16,7 @@ const ManageCampsPage = () => {
   } = useQuery({
     queryKey: ["allcamps"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/all-camps`
-      );
+      const { data } = await axiosSecure.get(`/all-camps`);
       return data;
     },
   });
@@ -34,16 +34,16 @@ const ManageCampsPage = () => {
       });
 
       if (confirmation.isConfirmed) {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/camp-delete/${id}`);
+        await axiosSecure.delete(`/camp-delete/${id}`);
         refetch(); // Refetch data to update UI
         Swal.fire("Deleted!", "The camp has been deleted.", "success");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong.");
+      error && toast.error("Something went wrong.");
     }
   };
 
-  if (isLoading) return <p>Loading camps...</p>;
+  if (isLoading) return <Spinner></Spinner>;
 
   return (
     <section className="py-10 dark:bg-gray-900 text-gray-700 dark:text-gray-300">

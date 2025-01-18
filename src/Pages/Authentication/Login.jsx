@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { saveUserInformation } from "../../Api/Utils";
+import Spinner from "../Spinner";
 
 const Login = () => {
   const { signIn, signInWithGoogle, setLoading, user, loading } = useAuth();
@@ -15,7 +16,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  if (loading) return <p>loding...</p>;
+  if (loading) return <Spinner></Spinner>;
   const from = location?.state?.from?.pathname || "/";
   if (user) return <Navigate to={from} replace={true} />;
   const onSubmit = async (data) => {

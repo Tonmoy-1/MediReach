@@ -7,16 +7,15 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Spinner from "../Pages/Spinner";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const PopularCampsSection = () => {
+  const axiosSecure = useAxiosSecure();
   const { data: campsData, isLoading } = useQuery({
     queryKey: ["allcamps"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/all-camps`
-      );
+      const { data } = await axiosSecure.get(`/all-camps`);
       return data;
     },
   });

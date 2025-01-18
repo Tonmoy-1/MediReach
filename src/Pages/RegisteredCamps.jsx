@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -7,8 +6,10 @@ import useAuth from "../Hooks/useAuth";
 import { useState } from "react";
 import PaymentModal from "./PaymentModal";
 import Spinner from "./Spinner";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const RegisteredCamps = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -19,9 +20,7 @@ const RegisteredCamps = () => {
   } = useQuery({
     queryKey: ["registeredCamps"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/registerCamps/${user?.email}`
-      );
+      const { data } = await axiosSecure.get(`/registerCamps/${user?.email}`);
       return data;
     },
   });
@@ -39,9 +38,7 @@ const RegisteredCamps = () => {
         confirmButtonText: "Yes, delete it!",
       });
       if (confirmation.isConfirmed) {
-        await axios.delete(
-          `${import.meta.env.VITE_API_URL}/registered-camps/${campId}`
-        );
+        await axiosSecure.delete(`/registered-camps/${campId}`);
         refetch();
         toast.success("Registration canceled successfully.");
       }

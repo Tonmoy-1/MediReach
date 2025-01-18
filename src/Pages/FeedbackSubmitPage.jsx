@@ -2,24 +2,24 @@ import { useContext, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import { AuthContext } from "../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const FeedbackSubmitPage = () => {
-  const [feedback, setFeedback] = useState(""); // To store feedback text
-  const [rating, setRating] = useState(0); // To store the rating value
+  const axiosSecure = useAxiosSecure();
+  const [feedback, setFeedback] = useState("");
+  const [rating, setRating] = useState(0);
 
   const handleRatingChange = (newRating) => {
-    setRating(newRating); // Update rating state when stars are clicked
+    setRating(newRating);
   };
   const { user } = useContext(AuthContext);
 
   const { data: userData } = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/user-data/${user?.email}`
-      );
+      const { data } = await axiosSecure.get(`/user-data/${user?.email}`);
       return data;
     },
   });
@@ -34,16 +34,11 @@ const FeedbackSubmitPage = () => {
       userEmail,
     };
 
-    console.log("Submitted Feedback:", feedbackData);
-
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/feedback`,
-        feedbackData
-      );
+      await axiosSecure.post(`/feedback`, feedbackData);
       Swal.fire("Success", "Thaks For Giving Feedback!", "success");
     } catch (error) {
-      console.log(error);
+      error && toast.error("Something Wrong");
     }
   };
 

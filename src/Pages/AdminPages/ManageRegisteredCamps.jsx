@@ -1,25 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Spinner from "../Spinner";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const ManageRegisteredCamps = () => {
+  const axiosSecure = useAxiosSecure();
   const {
     data: registerData,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["allcamps"],
+    queryKey: ["registerData"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/registerCamps`
-      );
+      const { data } = await axiosSecure.get(`/registerCamps`);
       return data;
     },
   });
-  console.log(registerData);
-  if (isLoading) return <Spinner></Spinner>;
 
   const handleCancel = async (campId) => {
     try {
@@ -34,9 +31,7 @@ const ManageRegisteredCamps = () => {
         confirmButtonText: "Yes, delete it!",
       });
       if (confirmation.isConfirmed) {
-        await axios.delete(
-          `${import.meta.env.VITE_API_URL}/registered-camps/${campId}`
-        );
+        await axiosSecure.delete(`/registered-camps/${campId}`);
         refetch();
         toast.success("Registration canceled successfully.");
       }
@@ -44,10 +39,11 @@ const ManageRegisteredCamps = () => {
       error && toast.error("Failed to cancel registration.");
     }
   };
+  if (isLoading) return <Spinner></Spinner>;
 
   const handlePending = async (id) => {
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/pending-status/${id}`);
+      await axiosSecure.patch(`/pending-status/${id}`);
       toast.success("You Successfully Update Confirm");
       refetch();
     } catch (error) {

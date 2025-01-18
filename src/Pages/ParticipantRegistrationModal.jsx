@@ -1,15 +1,13 @@
 /* eslint-disable react/prop-types */
-// import axios from "axios";
-// import Swal from "sweetalert2";
-import { useContext } from "react";
+
 import { FaTimes } from "react-icons/fa";
-import { AuthContext } from "../Providers/AuthProvider";
-import axios from "axios";
 import Swal from "sweetalert2";
+import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const ParticipantRegistrationModal = ({ campDetails, isOpen, onClose }) => {
-  const { user } = useContext(AuthContext);
-  console.log(user);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,20 +30,12 @@ const ParticipantRegistrationModal = ({ campDetails, isOpen, onClose }) => {
     };
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/register-participant`,
-        participantData
-      );
+      await axiosSecure.post(`/register-participant`, participantData);
 
       // increase the participant count to main camp
-      await axios.patch(
-        `${import.meta.env.VITE_API_URL}/register-participant/${
-          campDetails?._id
-        }`,
-        {
-          participantCount: 1,
-        }
-      );
+      await axiosSecure.patch(`/register-participant/${campDetails?._id}`, {
+        participantCount: 1,
+      });
       Swal.fire(
         "Success",
         "You have successfully registered for the camp!",

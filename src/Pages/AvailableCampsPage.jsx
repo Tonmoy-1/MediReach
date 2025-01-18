@@ -8,7 +8,7 @@ import Spinner from "./Spinner";
 const AvailableCampsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortCriteria, setSortCriteria] = useState("");
-  const [layout, setLayout] = useState("grid"); // 'grid' for 3-column, 'list' for 2-column
+  const [layout, setLayout] = useState("grid");
 
   const { data: camps, isLoading } = useQuery({
     queryKey: ["allcamps"],
@@ -22,9 +22,7 @@ const AvailableCampsPage = () => {
   if (isLoading) return <Spinner></Spinner>;
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
-
   const handleSortChange = (e) => setSortCriteria(e.target.value);
-
   const handleLayoutToggle = () => {
     setLayout((prev) => (prev === "grid" ? "list" : "grid"));
   };

@@ -1,16 +1,18 @@
 import { FaUserEdit } from "react-icons/fa";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import EditProfileModal from "../EditProfileModal";
 import Swal from "sweetalert2";
 import Spinner from "../Spinner";
+import useAuth from "../../Hooks/useAuth";
+import { useState } from "react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const UserProfile = () => {
+  const axiosSecure = useAxiosSecure();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const {
     data: userData,
@@ -19,9 +21,7 @@ const UserProfile = () => {
   } = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/user-data/${user?.email}`
-      );
+      const { data } = await axiosSecure.get(`/user-data/${user?.email}`);
       return data;
     },
   });
@@ -31,17 +31,14 @@ const UserProfile = () => {
 
   const handleUpdate = async (updatedData) => {
     // Handle the updated data (e.g., send it to the server)
-    console.log(updatedData);
+
     try {
-      await axios.put(
-        `${import.meta.env.VITE_API_URL}/update-profile/${user?.email}`,
-        updatedData
-      );
+      await axiosSecure.put(`/update-profile/${user?.email}`, updatedData);
       refetch();
       // On success, show a message and redirect if needed
       Swal.fire("Success", "Profile updated successfully!", "success");
     } catch (error) {
-      error && console.log("he");
+      error && toast.error("Somthing Wrong");
     }
   };
 

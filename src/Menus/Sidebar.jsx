@@ -7,7 +7,7 @@ import UserMenu from "./UserMenu";
 import useAuth from "../Hooks/useAuth";
 import useRole from "../Hooks/useRole";
 import MenuItem from "./MenuItem";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaStethoscope } from "react-icons/fa";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
@@ -25,11 +25,7 @@ const Sidebar = () => {
       <div className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 flex justify-between md:hidden">
         <div className="flex items-center p-4">
           <Link to="/">
-            <img
-              src="https://i.ibb.co/4ZXzmq5/logo.png"
-              alt="logo"
-              className="w-20 h-auto"
-            />
+            <FaStethoscope className="text-teal-600 text-4xl" />
           </Link>
         </div>
 
@@ -48,9 +44,15 @@ const Sidebar = () => {
         } md:translate-x-0 transition duration-200 ease-in-out shadow-lg`}
       >
         <div>
-          <div className="w-full hidden md:flex px-4 py-4 justify-center items-center bg-teal-100 dark:bg-teal-800 rounded-lg mx-auto">
+          <div className="w-full hidden md:flex px-4 py-4 justify-center items-center mx-auto">
             <Link to="/">
-              <img src="MaDical" alt="logo" className="w-24 h-auto" />
+              {/* Logo and Website Name */}
+              <div className="flex items-center">
+                <FaStethoscope className="text-teal-600 text-4xl" />
+                <h1 className=" hidden md:block text-2xl font-bold text-teal-600">
+                  MediReach
+                </h1>
+              </div>
             </Link>
           </div>
 

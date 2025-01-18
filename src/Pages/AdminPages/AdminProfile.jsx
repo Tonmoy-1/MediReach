@@ -1,13 +1,14 @@
 import { FaUserEdit } from "react-icons/fa";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import EditProfileModal from "../EditProfileModal";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import Spinner from "../Spinner";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AdminProfile = () => {
+  const axiosSecure = useAxiosSecure();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { user } = useAuth();
@@ -19,9 +20,7 @@ const AdminProfile = () => {
   } = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/user-data/${user?.email}`
-      );
+      const { data } = await axiosSecure.get(`/user-data/${user?.email}`);
       return data;
     },
   });
@@ -33,10 +32,7 @@ const AdminProfile = () => {
     // Handle the updated data (e.g., send it to the server)
     console.log(updatedData);
     try {
-      await axios.put(
-        `${import.meta.env.VITE_API_URL}/update-profile/${user?.email}`,
-        updatedData
-      );
+      await axiosSecure.put(`/update-profile/${user?.email}`, updatedData);
       refetch();
       // On success, show a message and redirect if needed
       Swal.fire("Success", "Profile updated successfully!", "success");
