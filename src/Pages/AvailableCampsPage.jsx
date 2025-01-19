@@ -10,7 +10,7 @@ const AvailableCampsPage = () => {
   const [sortCriteria, setSortCriteria] = useState("");
   const [layout, setLayout] = useState("grid");
 
-  const { data: camps, isLoading } = useQuery({
+  const { data: camps = [], isLoading } = useQuery({
     queryKey: ["allcamps"],
     queryFn: async () => {
       const { data } = await axios.get(

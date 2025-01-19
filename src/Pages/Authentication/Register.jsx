@@ -27,13 +27,14 @@ const Register = () => {
 
       // Update user profile
       await updateUserProfile(name, photoURL);
-
-      // Save user information in db if the user is new
-      await saveUserInformation({
-        ...result?.user,
-        displayName: name,
-        photoURL,
+      const user = result?.user;
+      console.log({
+        name: user?.displayName,
+        image: user?.photoURL,
+        email: user?.email,
       });
+      // Save user information in db if the user is new
+      await saveUserInformation(user);
 
       // Navigate to home page
       navigate("/");

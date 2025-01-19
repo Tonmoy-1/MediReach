@@ -3,29 +3,21 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import Rating from "react-rating-stars-component";
-
-const feedbacks = [
-  {
-    rating: 4.5,
-    feedback: "The camp provided exceptional services and healthcare support.",
-    userProfile: "https://i.ibb.co/8mt2536/undefined-image-6.png",
-    userEmail: "tonmoyhosen767@gmail.com",
-  },
-  {
-    rating: 5,
-    feedback: "Outstanding organization and care. Highly recommend it!",
-    userProfile: "https://i.ibb.co/8mt2536/undefined-image-6.png",
-    userEmail: "jane.doe@example.com",
-  },
-  {
-    rating: 4,
-    feedback: "A well-structured and impactful initiative for the community.",
-    userProfile: "https://i.ibb.co/8mt2536/undefined-image-6.png",
-    userEmail: "john.smith@example.com",
-  },
-];
+import Spinner from "../Pages/Spinner";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const FeedbackSection = () => {
+  const axiosSecure = useAxiosSecure();
+  // get feedback data using tanstack
+  const { data: feedBackData = [], isLoading } = useQuery({
+    queryKey: ["feedback"],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/feedback`);
+      return data;
+    },
+  });
+  if (isLoading) return <Spinner></Spinner>;
   return (
     <div className="w-11/12 mx-auto px-4 md:px-8 py-8">
       {/* Header Section */}
@@ -51,7 +43,7 @@ const FeedbackSection = () => {
             modules={[Autoplay, Pagination]}
             className="mySwiper"
           >
-            {feedbacks.map((item, index) => (
+            {feedBackData.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="p-8 bg-white dark:bg-gray-800 rounded-xl shadow-xl">
                   <div className="flex items-center gap-4 mb-6">

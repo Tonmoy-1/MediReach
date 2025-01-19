@@ -12,7 +12,7 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const PopularCampsSection = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: campsData, isLoading } = useQuery({
+  const { data: campsData = [], isLoading } = useQuery({
     queryKey: ["allcamps"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/all-camps`);

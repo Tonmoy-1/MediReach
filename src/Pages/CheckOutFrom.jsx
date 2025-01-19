@@ -7,7 +7,8 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./checkoutfrom.css";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
-import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+// import { useQuery } from "@tanstack/react-query";
 
 const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
   const [clientSecret, setClientSecret] = useState("");
@@ -30,7 +31,14 @@ const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
       console.log(error);
     }
   };
-  console.log(clientSecret);
+
+  // const { data: updateCamp = {} } = useQuery({
+  //   queryKey: ["camp", camp?._id],
+  //   queryFn: async () => {
+  //     const { data } = await axiosSecure.get(`/update-camp/${camp?._id}`);
+  //     return data;
+  //   },
+  // });
 
   const handleSubmit = async (event) => {
     // Block native form submission.
@@ -82,19 +90,20 @@ const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
           `${import.meta.env.VITE_API_URL}/pending-status/${camp._id}`
         );
 
-        // set payment data in server side database
-        await axiosSecure.post("/payment-success", {
-          campName: camp?.campDetails.name,
-          campFees: camp?.campDetails.fees,
-          paymentStatus: camp?.paymentStatus,
-          confirmationStatus: camp?.confirmationStatus,
-          transactionId: paymentIntent?.id,
-        });
-        toast.success("Payment successfully");
+        Swal.fire("Success", "Payment successfully", "success");
         refetch();
       } catch (error) {
         console.error(error);
       } finally {
+        // console.log(updateCamp);
+        // set payment data in server side database
+        await axiosSecure.post("/payment-success", {
+          campName: camp?.campDetails.name,
+          campFees: camp?.campDetails.fees,
+          paymentStatus: "Paid",
+          confirmationStatus: "Confirm",
+          transactionId: paymentIntent?.id,
+        });
         // setProcessing(false);
         setModalOpen(false);
       }
