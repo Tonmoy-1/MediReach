@@ -1,16 +1,34 @@
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Spinner from "../Spinner";
 
+// Reusable SearchBar component
+const SearchBar = ({ searchTerm, setSearchTerm }) => {
+  return (
+    <div className="mb-6 flex justify-center">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search by Camp Name, Date, or Healthcare Professional"
+        className="w-full max-w-lg p-3 border border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-800 dark:text-white"
+      />
+    </div>
+  );
+};
+
 const ManageCampsPage = () => {
   const axiosSecure = useAxiosSecure();
+
   // Fetch camps
   const {
-    data: camps,
+    data: camps = [],
     isLoading,
     refetch,
   } = useQuery({
@@ -21,6 +39,11 @@ const ManageCampsPage = () => {
     },
   });
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const campsPerPage = 5;
+
+  // Handle camp deletion
   const handleDelete = async (id) => {
     try {
       const confirmation = await Swal.fire({
@@ -43,11 +66,28 @@ const ManageCampsPage = () => {
     }
   };
 
-  if (isLoading) return <Spinner></Spinner>;
+  if (isLoading) return <Spinner />;
+
+  // Filter camps based on search term
+  const filteredCamps = camps.filter(
+    (camp) =>
+      camp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      camp.dateTime.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      camp.healthcareProfessional
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+  );
+
+  // Pagination logic
+  const indexOfLastCamp = currentPage * campsPerPage;
+  const indexOfFirstCamp = indexOfLastCamp - campsPerPage;
+  const currentCamps = filteredCamps.slice(indexOfFirstCamp, indexOfLastCamp);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <section className="py-10 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
-      <div className=" mx-auto">
+      <div className="mx-auto">
         <header className="text-center mb-8">
           <h1 className="text-4xl font-bold text-teal-600 dark:text-teal-400">
             Manage Camps
@@ -56,6 +96,9 @@ const ManageCampsPage = () => {
             View, edit, and delete camps you’ve organized.
           </p>
         </header>
+
+        {/* Search Bar */}
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
           <table className="w-full border-collapse text-left">
@@ -71,7 +114,7 @@ const ManageCampsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {camps.map((camp) => (
+              {currentCamps.map((camp) => (
                 <tr
                   key={camp._id}
                   className="border-t dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
@@ -80,14 +123,10 @@ const ManageCampsPage = () => {
                     {camp.name}
                   </td>
                   <td className="px-8 py-4 text-gray-800 dark:text-gray-300">
-                    <span>
-                      {camp.dateTime
-                        ? new Date(camp.dateTime).toLocaleString("en-US", {
-                            dateStyle: "medium",
-                            timeStyle: "short",
-                          })
-                        : "Date and time not available"}
-                    </span>
+                    {new Date(camp.dateTime).toLocaleString("en-US", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
                   </td>
                   <td className="px-6 py-4 text-gray-800 dark:text-gray-300">
                     {camp.location}
@@ -112,10 +151,30 @@ const ManageCampsPage = () => {
               ))}
             </tbody>
           </table>
-          {camps.length === 0 && (
+          {filteredCamps.length === 0 && (
             <p className="text-center py-6 text-gray-500 dark:text-gray-400">
-              No camps found. Start by creating a new one.
+              No camps found.
             </p>
+          )}
+        </div>
+
+        {/* Pagination */}
+        <div className="flex justify-center mt-6">
+          {Array.from(
+            { length: Math.ceil(filteredCamps.length / campsPerPage) },
+            (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => paginate(index + 1)}
+                className={`mx-1 px-4 py-2 rounded-lg ${
+                  currentPage === index + 1
+                    ? "bg-teal-500 text-white"
+                    : "bg-gray-300 dark:bg-gray-700"
+                }`}
+              >
+                {index + 1}
+              </button>
+            )
           )}
         </div>
       </div>

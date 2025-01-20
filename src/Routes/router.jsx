@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
     children: [
       // admin pages
       {
-        path: "/dashboard/admin-profile",
+        index: true,
         element: (
           <PrivateRoute>
             <AdminRoute>
