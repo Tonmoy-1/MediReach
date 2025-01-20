@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import Spinner from "../Pages/Spinner";
 import PaymentHistory from "../Pages/UserPages/PaymentHistory";
+import Analytics from "../Pages/UserPages/Analytics";
 
 export const router = createBrowserRouter([
   {
@@ -151,6 +152,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <UserRoute>
               <PaymentHistory></PaymentHistory>
+            </UserRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/analytics",
+        element: (
+          <PrivateRoute>
+            <UserRoute>
+              <Analytics></Analytics>
             </UserRoute>
           </PrivateRoute>
         ),
