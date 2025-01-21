@@ -12,24 +12,21 @@ import { useQuery } from "@tanstack/react-query";
 import ParticipantRegistrationModal from "./ParticipantRegistrationModal";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import Spinner from "./Spinner";
+import useAuth from "../Hooks/useAuth";
 
 const CampDetailPage = () => {
+  const { user } = useAuth();
   const [isModalOpen, setModalOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
-
   const { id } = useParams();
-  const {
-    data: camp,
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: camp, isLoading } = useQuery({
     queryKey: ["camp", id],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/camp/${id}`);
       return data;
     },
+    enabled: !!user?.email,
   });
-  refetch();
   if (isLoading) return <Spinner></Spinner>;
 
   if (!camp) {

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import Spinner from "../Spinner";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const AdminProfile = () => {
   const axiosSecure = useAxiosSecure();
@@ -30,14 +31,13 @@ const AdminProfile = () => {
 
   const handleUpdate = async (updatedData) => {
     // Handle the updated data (e.g., send it to the server)
-    console.log(updatedData);
     try {
       await axiosSecure.put(`/update-profile/${user?.email}`, updatedData);
       refetch();
       // On success, show a message and redirect if needed
       Swal.fire("Success", "Profile updated successfully!", "success");
     } catch (error) {
-      error && console.log("he");
+      error && toast.error(error);
     }
   };
 

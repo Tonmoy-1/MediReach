@@ -8,6 +8,8 @@ import "./checkoutfrom.css";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import useAuth from "../Hooks/useAuth";
 // import { useQuery } from "@tanstack/react-query";
 
 const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
@@ -15,7 +17,7 @@ const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
-
+  const { user } = useAuth();
   useEffect(() => {
     getPaymentIntent();
   }, [camp]);
@@ -28,7 +30,7 @@ const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
       });
       setClientSecret(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
 
@@ -66,7 +68,7 @@ const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
     });
 
     if (error) {
-      console.log("[error]", error);
+      toast.error("[error]", error);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
     }
@@ -81,7 +83,6 @@ const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
         },
       },
     });
-    console.log(paymentIntent);
     // set database payment info
     if (paymentIntent.status === "succeeded") {
       try {
@@ -95,9 +96,9 @@ const CheckoutForm = ({ camp, refetch, setModalOpen }) => {
       } catch (error) {
         console.error(error);
       } finally {
-        // console.log(updateCamp);
         // set payment data in server side database
         await axiosSecure.post("/payment-success", {
+          PayerEmail: user?.email,
           campName: camp?.campDetails.name,
           campFees: camp?.campDetails.fees,
           paymentStatus: "Paid",

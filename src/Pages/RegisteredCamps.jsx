@@ -8,13 +8,26 @@ import PaymentModal from "./PaymentModal";
 import Spinner from "./Spinner";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 
+import SearchBar from "../Components/SearchBar";
+import Pagination from "../Components/Pagination";
+
 const RegisteredCamps = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+
+  // State to handle modal visibility
   const [isModalOpen, setModalOpen] = useState(false);
 
+  // State to track search term
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  // Fetching registered camps from API using react-query
   const {
-    data: registeredCamps,
+    data: registeredCamps = [],
     isLoading,
     refetch,
   } = useQuery({
@@ -25,9 +38,9 @@ const RegisteredCamps = () => {
     },
   });
 
+  // Function to handle camp cancellation
   const handleCancel = async (campId) => {
     try {
-      // Cancel registration for the specific camp
       const confirmation = await Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -37,22 +50,49 @@ const RegisteredCamps = () => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
       });
+
       if (confirmation.isConfirmed) {
         await axiosSecure.delete(`/registered-camps/${campId}`);
-        refetch();
+        refetch(); // Refresh data after deletion
         toast.success("Registration canceled successfully.");
       }
     } catch (error) {
       error && toast.error("Failed to cancel registration.");
     }
   };
-  if (isLoading) return <Spinner></Spinner>;
+
+  // Filtering camps based on the search term
+  const filteredCamps = registeredCamps.filter(
+    (camp) =>
+      camp?.campDetails?.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      camp.participantName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      camp.paymentStatus.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Paginating filtered camps based on the current page
+  const paginatedCamps = filteredCamps.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Show loading spinner while data is being fetched
+  if (isLoading) return <Spinner />;
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 px-5">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-5">
           Registered Camps
         </h1>
+        <p className="text-lg text-gray-500 dark:text-gray-400 mb-4">
+          Empowering communities through healthcare!
+        </p>
+
+        {/* Search Bar Component */}
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg">
             <thead>
@@ -71,7 +111,7 @@ const RegisteredCamps = () => {
               </tr>
             </thead>
             <tbody>
-              {registeredCamps.map((camp, index) => (
+              {paginatedCamps.map((camp, index) => (
                 <tr
                   key={camp._id}
                   className={`${
@@ -112,18 +152,17 @@ const RegisteredCamps = () => {
                       {camp.confirmationStatus}
                     </span>
                   </td>
-                  <td className="px-6 py-3 text-sm ">
+                  <td className="px-6 py-3 text-sm">
                     <Link to={"/dashboard/send-feedback"}>
                       <button
                         disabled={camp.paymentStatus === "pay"}
-                        //   onClick={() => handleFeedback(camp.id)}
                         className="px-4 py-2 bg-teal-500 text-white rounded-lg text-xs font-medium hover:bg-teal-400 disabled:bg-gray-400 disabled:cursor-not-allowed"
                       >
                         Feedback
                       </button>
                     </Link>
                   </td>
-                  <td className="px-6 py-3 text-sm ">
+                  <td className="px-6 py-3 text-sm">
                     <button
                       disabled={camp.paymentStatus === "Paid"}
                       onClick={() => handleCancel(camp._id)}
@@ -139,16 +178,19 @@ const RegisteredCamps = () => {
                     setModalOpen={setModalOpen}
                     fees={camp?.campDetails?.fees}
                     onClose={() => setModalOpen(false)}
-                  ></PaymentModal>
+                  />
                 </tr>
               ))}
             </tbody>
           </table>
-          {registeredCamps.length === 0 && (
-            <div className="mt-5 text-center text-gray-600 dark:text-gray-400">
-              No registered camps to display.
-            </div>
-          )}
+
+          {/* Pagination Component */}
+          <Pagination
+            totalItems={filteredCamps.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </div>
     </div>

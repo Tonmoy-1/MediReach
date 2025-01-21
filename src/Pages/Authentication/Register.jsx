@@ -28,11 +28,6 @@ const Register = () => {
       // Update user profile
       await updateUserProfile(name, photoURL);
       const user = result?.user;
-      console.log({
-        name: user?.displayName,
-        image: user?.photoURL,
-        email: user?.email,
-      });
       // Save user information in db if the user is new
       await saveUserInformation(user);
 

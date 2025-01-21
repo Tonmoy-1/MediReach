@@ -13,7 +13,6 @@ const Sidebar = () => {
   const { logOut } = useAuth();
   const [isActive, setActive] = useState(false);
   const [role] = useRole();
-  console.log(role);
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive);

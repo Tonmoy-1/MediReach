@@ -16,8 +16,8 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  if (loading) return <Spinner></Spinner>;
   const from = location?.state?.from?.pathname || "/";
+  if (loading) return <Spinner></Spinner>;
   if (user) return <Navigate to={from} replace={true} />;
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -25,9 +25,8 @@ const Login = () => {
       await signIn(email, password);
       navigate(from, { replace: true });
       toast.success("LogIn Successfull");
-    } catch (err) {
-      console.log(err);
-      toast.error("Something Wrong");
+    } catch (error) {
+      toast.error("Something Wrong", error);
       setLoading(false);
     }
   };

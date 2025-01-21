@@ -6,7 +6,11 @@ import MenuItem from "./MenuItem";
 const AdminMenu = () => {
   return (
     <>
-      <MenuItem icon={FaUserCog} label="Admin Profile" address="/dashboard" />
+      <MenuItem
+        icon={FaUserCog}
+        label="Admin Profile"
+        address="/dashboard/admin-profile"
+      />
       <MenuItem
         icon={MdAddCircleOutline}
         label="Add A Camp"

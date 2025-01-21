@@ -9,10 +9,12 @@ import {
 } from "react-icons/fa";
 import { MdDashboard, MdLogout } from "react-icons/md";
 import useAuth from "../Hooks/useAuth";
+import useRole from "../Hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [role] = useRole();
 
   return (
     <nav className="bg-white md:mx-4">
@@ -57,7 +59,11 @@ const Navbar = () => {
                     {user?.displayName}
                   </div>
                   <Link
-                    to="/dashboard"
+                    to={`${
+                      role === "user"
+                        ? "/dashboard/analytics"
+                        : "/dashboard/admin-profile"
+                    }`}
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-teal-100"
                   >
                     <MdDashboard className="mr-2" /> Dashboard

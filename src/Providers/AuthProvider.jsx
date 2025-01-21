@@ -53,9 +53,6 @@ const AuthProvider = ({ children }) => {
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      // console.log("CurrentUser-->", currentUser);
-      setUser(currentUser);
-
       if (currentUser) {
         const userInfo = { email: currentUser.email };
         axios
@@ -64,14 +61,14 @@ const AuthProvider = ({ children }) => {
             if (res.data.token) {
               localStorage.setItem("access-token", res.data.token);
               setLoading(false);
+              setUser(currentUser);
             }
           });
       } else {
         localStorage.removeItem("access-token");
         setLoading(false);
+        setUser(currentUser);
       }
-
-      setLoading(false);
     });
     return () => {
       return unsubscribe();
