@@ -3,6 +3,9 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Spinner from "../Spinner";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useState } from "react";
+import SearchBar from "../../Components/SearchBar";
+import Pagination from "../../Components/Pagination";
 
 const ManageRegisteredCamps = () => {
   const axiosSecure = useAxiosSecure();
@@ -17,6 +20,10 @@ const ManageRegisteredCamps = () => {
       return data;
     },
   });
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const handleCancel = async (campId) => {
     try {
@@ -39,7 +46,6 @@ const ManageRegisteredCamps = () => {
       error && toast.error("Failed to cancel registration.");
     }
   };
-  if (isLoading) return <Spinner></Spinner>;
 
   const handlePending = async (id) => {
     try {
@@ -51,13 +57,33 @@ const ManageRegisteredCamps = () => {
     }
   };
 
+  if (isLoading) return <Spinner />;
+
+  // Filter camps based on search term
+  const filteredCamps = registerData.filter(
+    (camp) =>
+      camp?.campDetails?.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      camp?.participantName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Pagination logic
+  const paginatedCamps = filteredCamps.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
-    <div className="min-h-screen py-10  dark:bg-gray-900">
+    <div className="min-h-screen py-10 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-teal-600 dark:text-white mb-6 text-center">
           Manage Registered Camps
         </h1>
-        <div className="overflow-x-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+        <div className="overflow-x-auto bg-white dark:bg-gray-800  rounded-lg">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gray-200 dark:bg-gray-700">
@@ -82,8 +108,8 @@ const ManageRegisteredCamps = () => {
               </tr>
             </thead>
             <tbody>
-              {registerData.length > 0 ? (
-                registerData.map((camp) => (
+              {paginatedCamps.length > 0 ? (
+                paginatedCamps.map((camp) => (
                   <tr
                     key={camp._id}
                     className="hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -139,6 +165,13 @@ const ManageRegisteredCamps = () => {
             </tbody>
           </table>
         </div>
+
+        <Pagination
+          totalItems={filteredCamps.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </div>
   );

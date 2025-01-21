@@ -7,7 +7,7 @@ const UserRoute = ({ children }) => {
 
   if (isLoading) return <p>Laoding...</p>;
   if (role === "user") return children;
-  return <Navigate to="/dashboard/user-profile" replace="true" />;
+  return <Navigate to="/dashboard" replace="true" />;
 };
 
 UserRoute.propTypes = {
