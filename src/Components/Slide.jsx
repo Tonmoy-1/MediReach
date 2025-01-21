@@ -23,7 +23,7 @@ const Slide = ({ image, text }) => {
         </p>
         <div>
           <Link
-            to="/all-volunteers"
+            to="/available-camps"
             className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 focus:outline-none transition duration-300 ease-in-out transform hover:scale-105"
           >
             See All

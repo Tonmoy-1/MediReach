@@ -20,12 +20,14 @@ const Navbar = () => {
     <nav className="bg-white md:mx-4">
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* Logo and Website Name */}
-        <div className="flex items-center">
-          <FaStethoscope className="text-teal-600 text-4xl" />
-          <h1 className=" hidden md:block text-2xl font-bold text-teal-600">
-            MediReach
-          </h1>
-        </div>
+        <Link to={"/"}>
+          <div className="flex items-center">
+            <FaStethoscope className="text-teal-600 text-4xl" />
+            <h1 className=" hidden md:block text-2xl font-bold text-teal-600">
+              MediReach
+            </h1>
+          </div>
+        </Link>
 
         {/* Navigation Links */}
         <div className="flex items-center space-x-6">
