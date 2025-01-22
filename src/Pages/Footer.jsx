@@ -7,7 +7,7 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-              About MCMS
+              About MediReach
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               The Medical Camp Management System (MCMS) simplifies the
@@ -79,7 +79,7 @@ const Footer = () => {
                     href="mailto:info@mcms.com"
                     className="hover:text-teal-600 dark:hover:text-teal-400"
                   >
-                    info@mcms.com
+                    info@medirach.com
                   </a>
                 </span>
               </li>

@@ -30,10 +30,10 @@ const Analytics = () => {
 
   // Calculate summary metrics
   const totalCamps = data.length;
-  const totalParticipants = data.reduce(
-    (sum, camp) => sum + camp.campDetails.participantCount,
-    0
-  );
+  // const totalParticipants = data.reduce(
+  //   (sum, camp) => sum + camp.campDetails.participantCount,
+  //   0
+  // );
   const totalFeesPaid = data.reduce(
     (sum, camp) =>
       camp.paymentStatus === "Paid"
@@ -61,15 +61,15 @@ const Analytics = () => {
         Participant Analytics
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-8 mb-12">
+      <div className="grid md:grid-cols-2 gap-8 mb-12">
         {[
           { label: "Total Camps", value: totalCamps },
-          { label: "Total Participants", value: totalParticipants },
+          // { label: "Total Participants", value: totalParticipants },
           { label: "Total Fees Paid", value: `$${totalFeesPaid}` },
         ].map((item, index) => (
           <div
             key={index}
-            className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md flex flex-col items-center justify-center hover:shadow-xl transition-all"
+            className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md flex flex-col items-center justify-center hover:shadow-xl transition-all "
           >
             <h3 className="text-2xl font-semibold text-gray-600 dark:text-gray-300">
               {item.label}

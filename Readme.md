@@ -73,3 +73,6 @@ The application can be deployed to platforms such as **Firebase** (frontend) and
 
 
 ```
+
+Organizers username: test@gmail.com
+Password: 123456
