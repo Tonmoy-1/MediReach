@@ -6,6 +6,7 @@ import FeedbackSection from "../Components/FeedbackSection";
 import FindSpecialist from "../Components/FindSpecialist";
 import HowItWorks from "../Components/HowItWorks";
 import MedicalServices from "../Components/MedicalServices";
+import PlanYourVisit from "../Components/PlanYourVisit";
 
 import PopularCampsSection from "../Components/PopularCampsSection";
 import Telemedicine from "../Components/Telemedicine";
@@ -25,6 +26,7 @@ const Home = () => {
       <EmergencyContacts></EmergencyContacts>
       <Telemedicine></Telemedicine>
       <Testimonials></Testimonials>
+      <PlanYourVisit></PlanYourVisit>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 bg-gray-100 px-4">
         <div>
           <WhyChooseUs />
