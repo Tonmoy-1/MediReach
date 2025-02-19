@@ -1,33 +1,33 @@
-"use client";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import logo1 from "../assets/pat1.jpg";
 
 export default function PartnerHospitals() {
   const hospitals = [
-    { name: "City Medical Center", logo: "/hospital1.png" },
-    { name: "Sunrise HealthCare", logo: "/hospital2.png" },
-    { name: "Metro Hospital", logo: "/hospital3.png" },
-    { name: "Wellness Clinic", logo: "/hospital4.png" },
-    { name: "LifeCare Hospital", logo: "/hospital5.png" },
-    { name: "Prime Health", logo: "/hospital6.png" },
+    { name: "City Medical Center", logo: "../assets/pat1.jpg" },
+    { name: "Sunrise HealthCare", logo: "../assets/pat1.jpg" },
+    { name: "Metro Hospital", logo: "../assets/pat1.jpg" },
+    { name: "Wellness Clinic", logo: "../assets/pat1.jpg" },
+    { name: "LifeCare Hospital", logo: "../assets/pat1.jpg" },
+    { name: "Prime Health", logo: "../assets/pat1.jpg" },
   ];
 
-  // Auto-scrolling effect
   const [offset, setOffset] = useState(0);
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setOffset((prev) => (prev - 1) % (hospitals.length * 150)); // Adjust for smooth looping
-    }, 40);
+      setOffset((prevOffset) => (prevOffset - 1) % (hospitals.length * 150)); // Adjust for smooth looping
+    }, 30); // Adjust speed of scrolling here
     return () => clearInterval(interval);
   }, [hospitals.length]);
 
   return (
-    <section className="bg-gray-100 dark:bg-gray-900 py-16 px-6 md:px-12">
+    <section className="bg-gradient-to-r from-[#10B98E] to-[#0c9c7e] dark:from-[#2D3748] dark:to-[#1A202C] py-16 px-6 md:px-12">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
-          Our Partner Hospitals
+        <h2 className="text-4xl font-bold text-white mb-4">
+          Our Esteemed Partner Hospitals
         </h2>
-        <p className="text-gray-600 dark:text-gray-300 mt-2">
-          We collaborate with top hospitals to ensure world-class healthcare
+        <p className="text-lg text-gray-200 dark:text-gray-300">
+          Partnering with leading hospitals to provide world-class healthcare
           services.
         </p>
       </div>
@@ -35,19 +35,27 @@ export default function PartnerHospitals() {
       {/* Scrolling Logos */}
       <div className="relative overflow-hidden mt-8">
         <div
-          className="flex space-x-12 animate-scroll"
+          className="flex space-x-8"
           style={{ transform: `translateX(${offset}px)` }}
         >
           {[...hospitals, ...hospitals].map((hospital, index) => (
-            <div key={index} className="w-36 h-36 flex flex-col items-center">
-              <img
-                src={hospital.logo}
-                alt={hospital.name}
-                className="w-full h-full object-contain rounded-lg shadow-md hover:scale-105 transition"
-              />
-              <p className="text-sm text-gray-800 dark:text-white mt-2">
-                {hospital.name}
-              </p>
+            <div
+              key={index}
+              className="w-96 h-72 flex flex-col items-center relative"
+            >
+              <div className="w-full h-full overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-110 hover:shadow-xl">
+                <img
+                  src={logo1}
+                  alt={hospital.name}
+                  className="w-full h-full object-contain transition-all duration-500 ease-in-out"
+                />
+              </div>
+              {/* Hospital name overlay */}
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-all duration-300">
+                <p className="text-white text-sm font-semibold tracking-wide">
+                  {hospital.name}
+                </p>
+              </div>
             </div>
           ))}
         </div>

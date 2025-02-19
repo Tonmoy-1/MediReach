@@ -4,7 +4,9 @@ import FeedbackSection from "../Components/FeedbackSection";
 import FindSpecialist from "../Components/FindSpecialist";
 import HowItWorks from "../Components/HowItWorks";
 import MedicalServices from "../Components/MedicalServices";
+import PartnerHospitals from "../Components/PartnerHospitals";
 import PopularCampsSection from "../Components/PopularCampsSection";
+import Testimonials from "../Components/Testimonials";
 
 const Home = () => {
   return (
@@ -14,8 +16,10 @@ const Home = () => {
       <MedicalServices></MedicalServices>
       <FeedbackSection></FeedbackSection>
       <AboutUs></AboutUs>
+      <PartnerHospitals></PartnerHospitals>
       <HowItWorks></HowItWorks>
       <FindSpecialist></FindSpecialist>
+      <Testimonials></Testimonials>
     </div>
   );
 };
