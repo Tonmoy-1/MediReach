@@ -1,5 +1,6 @@
 import AboutUs from "../Components/AboutUs";
 import Carousel from "../Components/Carousel";
+import EmergencyContacts from "../Components/EmergencyContacts";
 import FeedbackSection from "../Components/FeedbackSection";
 import FindSpecialist from "../Components/FindSpecialist";
 import HowItWorks from "../Components/HowItWorks";
@@ -20,6 +21,7 @@ const Home = () => {
       <AboutUs></AboutUs>
       <HowItWorks></HowItWorks>
       <FindSpecialist></FindSpecialist>
+      <EmergencyContacts></EmergencyContacts>
       <Telemedicine></Telemedicine>
       <Testimonials></Testimonials>
       <WhyChooseUs></WhyChooseUs>
