@@ -67,7 +67,7 @@ export default function AboutUs() {
         </p>
       </div>
 
-      <div className="mt-12 text-center">
+      {/* <div className="mt-12 text-center">
         <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
           Our Vision
         </h3>
@@ -76,7 +76,7 @@ export default function AboutUs() {
           way people access and manage their health services with innovation and
           trust.
         </p>
-      </div>
+      </div> */}
 
       <div className="mt-12 text-center">
         <button className="bg-[#10B98E] text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-[#0e9a78] transition">
