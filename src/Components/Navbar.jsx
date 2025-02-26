@@ -34,7 +34,7 @@ const Navbar = () => {
   }, [darkMode]);
 
   return (
-    <nav className="navbar fixed top-0 left-0 w-full z-50 px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 transition">
+    <nav className="navbar fixed top-0 left-0 w-full z-50 px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 transition mb-14">
       <div className="w-full mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to={"/"}>

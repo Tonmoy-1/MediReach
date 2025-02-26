@@ -56,7 +56,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen py-10 flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen py-10 flex items-center justify-center bg-gray-100 dark:bg-gray-900 mt-14">
       <div className="md:w-8/12 w-10/12 p-8 space-y-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
           Create an Account

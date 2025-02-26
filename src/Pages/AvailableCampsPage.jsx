@@ -40,7 +40,7 @@ const AvailableCampsPage = () => {
     });
 
   return (
-    <section className="py-10 bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
+    <section className="py-10 bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 mt-12">
       <div className="container mx-auto px-4">
         {/* Page Heading and Slogan */}
         <header className="text-center mb-10">
