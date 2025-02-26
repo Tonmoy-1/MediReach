@@ -21,10 +21,11 @@ const PopularCampsSection = () => {
   });
 
   if (isLoading) return <Spinner></Spinner>;
+
   return (
-    <section className="bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-300 py-10">
+    <section className="bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-300 py-14">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-semibold text-center text-teal-600 dark:text-teal-400 mb-8">
+        <h2 className="text-3xl font-semibold text-center text-teal-600 dark:text-teal-400 mb-8 mt-3">
           Popular Medical Camps
         </h2>
 
@@ -32,7 +33,7 @@ const PopularCampsSection = () => {
           {campsData.slice(0, 6).map((camp) => (
             <div
               key={camp._id}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
+              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300"
             >
               <img
                 src={camp?.photoURl}
@@ -96,7 +97,7 @@ const PopularCampsSection = () => {
         <div className="mt-8 text-center">
           <Link
             to="/available-camps"
-            className="px-6 py-3 text-white bg-teal-600 rounded-lg hover:bg-teal-500 dark:hover:bg-teal-400 transition duration-300"
+            className="px-6 py-3 text-white bg-teal-600 rounded-lg hover:bg-teal-500 transition duration-300"
           >
             See All Camps
           </Link>

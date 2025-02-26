@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Slide = ({ image, text }) => {
   return (
-    <div className="flex flex-col md:flex-row items-center bg-white rounded-lg  overflow-hidden">
+    <div className="flex flex-col md:flex-row items-center bg-white dark:bg-gray-900 rounded-lg overflow-hidden transition-colors duration-300">
       {/* Image Section */}
       <div
         className="w-full md:w-1/2 h-64 md:h-[28rem] bg-cover bg-center"
@@ -11,13 +11,14 @@ const Slide = ({ image, text }) => {
           backgroundImage: `url(${image})`,
         }}
       ></div>
+      {/* bg-gradient-to-b from-teal-50 to-white */}
 
       {/* Text Section */}
-      <div className="w-full md:w-1/2 p-6 md:p-12 bg-gradient-to-b from-teal-50 to-white flex flex-col justify-center">
-        <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
+      <div className="w-full md:w-1/2 p-6 md:p-12   flex flex-col justify-center transition-colors duration-300">
+        <h1 className="text-2xl md:text-4xl font-bold text-gray-800 dark:text-gray-800 mb-4">
           {text}
         </h1>
-        <p className="text-gray-600 text-sm md:text-base mb-6">
+        <p className="text-gray-600 dark:text-gray-800 text-sm md:text-base mb-6">
           Join us in making a difference. Be a part of something bigger and help
           those in need by becoming a volunteer in our medical camps.
         </p>

@@ -11,7 +11,7 @@ import img4 from "../assets/img4.jpg";
 
 export default function Carousel() {
   return (
-    <div className="container px-4 md:px-8 py-6 mx-auto rounded-lg shadow-lg overflow-hidden">
+    <div className="container px-4 md:px-8 py-6 mx-auto rounded-lg shadow-lg overflow-hidden mt-14 bg-white dark:bg-gray-900 transition-colors duration-300">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -32,6 +32,7 @@ export default function Carousel() {
             <Slide
               image={image}
               text="Join Our Mission to Provide Free Medical Care to Communities in Need"
+              className="text-gray-900 dark:text-gray-800"
             />
           </SwiperSlide>
         ))}
