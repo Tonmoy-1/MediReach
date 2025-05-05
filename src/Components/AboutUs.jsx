@@ -1,4 +1,35 @@
+import { useEffect, useState } from "react";
+
 export default function AboutUs() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Check user's system preference or localStorage for saved theme
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setDarkMode(true);
+      document.documentElement.classList.add("dark"); // Add dark class to html
+    } else if (savedTheme === "light") {
+      setDarkMode(false);
+      document.documentElement.classList.remove("dark"); // Remove dark class
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setDarkMode(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  // Toggle dark mode
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    if (!darkMode) {
+      localStorage.setItem("theme", "dark");
+      document.documentElement.classList.add("dark");
+    } else {
+      localStorage.setItem("theme", "light");
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
   return (
     <section className="bg-gray-100 dark:bg-gray-900 py-16 px-6 md:px-12 lg:px-20 transition-colors duration-300">
       <div className="max-w-6xl mx-auto text-center">
@@ -67,20 +98,19 @@ export default function AboutUs() {
         </p>
       </div>
 
-      {/* <div className="mt-12 text-center">
-        <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
-          Our Vision
-        </h3>
-        <p className="text-lg text-gray-600 dark:text-gray-300 mt-4 max-w-3xl mx-auto">
-          To become the leading digital healthcare platform, transforming the
-          way people access and manage their health services with innovation and
-          trust.
-        </p>
-      </div> */}
-
       <div className="mt-12 text-center">
         <button className="bg-[#10B98E] text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-[#0e9a78] transition">
           Join Us Today
+        </button>
+      </div>
+
+      {/* Dark Mode Toggle Button */}
+      <div className="mt-8 text-center">
+        <button
+          onClick={toggleTheme}
+          className="bg-gray-800 text-white font-semibold py-2 px-6 rounded-full hover:bg-gray-700 transition-colors duration-300"
+        >
+          Toggle {darkMode ? "Light" : "Dark"} Mode
         </button>
       </div>
     </section>
