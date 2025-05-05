@@ -8,19 +8,19 @@ export default function Telemedicine() {
         <img
           src={Telemedicinepic}
           alt="Telemedicine"
-          className="w-full md:w-1/2 rounded-xl shadow-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl"
+          className="w-full md:w-1/2 rounded-lg shadow-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl"
         />
 
         {/* Text Section */}
         <div className="md:w-1/2 text-center md:text-left">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 dark:text-white mb-4 animate-fade-in-up">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 dark:text-white mb-6 animate-fade-in-up">
             Telemedicine Services
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mt-4 max-w-3xl mx-auto leading-relaxed animate-fade-in-up">
             Get expert medical advice from the comfort of your home. Book
             virtual consultations with certified doctors anytime, anywhere.
           </p>
-          <button className="mt-6 bg-[#10B98E] text-white py-3 px-8 rounded-lg shadow-lg hover:bg-[#0e9a78] transition transform duration-300 hover:scale-110 hover:shadow-xl">
+          <button className="mt-6 bg-[#10B98E] text-white py-3 px-8 rounded-lg shadow-lg hover:bg-[#0e9a78] transition transform duration-300 hover:scale-110 hover:shadow-2xl">
             Book a Virtual Consultation
           </button>
         </div>

@@ -10,7 +10,7 @@ import PlanYourVisit from "../Components/PlanYourVisit";
 
 import PopularCampsSection from "../Components/PopularCampsSection";
 import Telemedicine from "../Components/Telemedicine";
-import Testimonials from "../Components/Testimonials";
+// import Testimonials from "../Components/Testimonials";
 import WhyChooseUs from "../Components/WhyChooseUs";
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
       <PlanYourVisit></PlanYourVisit>
       <EmergencyContacts></EmergencyContacts>
       <Telemedicine></Telemedicine>
-      <Testimonials></Testimonials>
+      {/* <Testimonials></Testimonials> */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 bg-gray-100 px-4">
         <div>
           <WhyChooseUs />
