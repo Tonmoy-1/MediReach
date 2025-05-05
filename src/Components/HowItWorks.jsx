@@ -59,7 +59,7 @@ export default function HowItWorks() {
             key={index}
             className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-300 hover:scale-105"
           >
-            <div className="flex justify-center text-5xl text-[#10B98E] mb-4">
+            <div className="flex justify-center text-5xl text-[#10B98E] dark:text-[#10B98E] mb-4">
               {step.icon}
             </div>
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
