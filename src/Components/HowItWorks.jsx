@@ -44,7 +44,7 @@ export default function HowItWorks() {
   return (
     <section className="bg-gradient-to-tl from-teal-100 to-white dark:from-teal-900 dark:to-gray-800 py-16 px-6 md:px-12 lg:px-20 transition-colors duration-300">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-semibold text-gray-800 dark:text-white mb-6">
+        <h2 className="text-4xl md:text-5xl font-semibold text-gray-800 dark:text-white mb-6 tracking-wide">
           How It Works
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -59,11 +59,13 @@ export default function HowItWorks() {
             key={index}
             className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-300 hover:scale-105"
           >
-            <div className="flex justify-center mb-4">{step.icon}</div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+            <div className="flex justify-center text-5xl text-[#10B98E] mb-4">
+              {step.icon}
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
               {step.title}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               {step.description}
             </p>
           </div>
