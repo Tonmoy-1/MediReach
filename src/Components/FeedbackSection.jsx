@@ -17,7 +17,8 @@ const FeedbackSection = () => {
       return data;
     },
   });
-  if (isLoading) return <Spinner></Spinner>;
+  if (isLoading) return <Spinner />;
+
   return (
     <div className="w-11/12 mx-auto px-4 md:px-8 py-8">
       {/* Header Section */}
@@ -45,12 +46,12 @@ const FeedbackSection = () => {
           >
             {feedBackData.map((item, index) => (
               <SwiperSlide key={index}>
-                <div className="p-8 bg-white dark:bg-gray-800 rounded-xl shadow-xl">
+                <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all">
                   <div className="flex items-center gap-4 mb-6">
                     <img
                       src={item.userProfile}
                       alt={item.userEmail}
-                      className="w-14 h-14 rounded-full border-2 border-teal-500"
+                      className="w-14 h-14 rounded-full border-2 border-teal-500 shadow-md"
                     />
                     <div>
                       <p className="text-lg font-semibold text-gray-800 dark:text-white">
@@ -75,15 +76,13 @@ const FeedbackSection = () => {
         </div>
 
         {/* Static Image */}
-        <div className="w-full md:w-1/2">
-          <div className="relative">
-            <img
-              src="https://i.ibb.co.com/0tYBhRT/pexels-rdne-7581108.jpg"
-              alt="Feedback Illustration"
-              className="w-full h-auto rounded-lg shadow-xl object-cover"
-            />
-            <div className="absolute top-0 left-0 w-full h-full bg-teal-500 bg-opacity-30 rounded-lg"></div>
-          </div>
+        <div className="w-full md:w-1/2 relative">
+          <img
+            src="https://i.ibb.co.com/0tYBhRT/pexels-rdne-7581108.jpg"
+            alt="Feedback Illustration"
+            className="w-full h-auto rounded-lg shadow-lg object-cover transition-transform duration-500 ease-in-out hover:scale-105"
+          />
+          <div className="absolute top-0 left-0 w-full h-full bg-teal-500 bg-opacity-30 rounded-lg"></div>
         </div>
       </div>
     </div>
