@@ -42,12 +42,12 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="bg-gray-100 dark:bg-gray-900 py-16 px-6 md:px-12 lg:px-20 transition-colors duration-300">
+    <section className="bg-gradient-to-tl from-teal-100 to-white dark:from-teal-900 dark:to-gray-800 py-16 px-6 md:px-12 lg:px-20 transition-colors duration-300">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">
+        <h2 className="text-4xl md:text-5xl font-semibold text-gray-800 dark:text-white mb-6">
           How It Works
         </h2>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
           MediReach provides a seamless healthcare experience in just a few
           simple steps.
         </p>
@@ -57,10 +57,10 @@ export default function HowItWorks() {
         {steps.map((step, index) => (
           <div
             key={index}
-            className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md dark:shadow-lg transform transition duration-300 hover:scale-105"
+            className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-300 hover:scale-105"
           >
-            <div className="flex justify-center">{step.icon}</div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mt-4">
+            <div className="flex justify-center mb-4">{step.icon}</div>
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
               {step.title}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mt-2">
