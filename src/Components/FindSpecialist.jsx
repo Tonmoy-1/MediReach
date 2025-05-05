@@ -37,10 +37,10 @@ export default function FindSpecialist() {
   return (
     <section className="bg-gray-100 dark:bg-gray-900 py-16 px-6 md:px-12 lg:px-20 transition-colors duration-300">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-6 tracking-wide">
           Find a Specialist
         </h2>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
           Search and connect with top medical professionals for expert
           consultations.
         </p>
@@ -63,15 +63,15 @@ export default function FindSpecialist() {
         {specialists.map((specialist, index) => (
           <div
             key={index}
-            className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md dark:shadow-lg transform transition duration-300 hover:scale-105"
+            className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-300 hover:scale-105"
           >
-            <div className="flex justify-center text-4xl text-[#10B98E]">
+            <div className="flex justify-center text-5xl text-[#10B98E] mb-4">
               {specialist.icon}
             </div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mt-4">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
               {specialist.name}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               {specialist.specialty}
             </p>
             <p className="mt-2 text-sm font-medium text-[#10B98E]">
